@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	{% load staticfiles %}
+	<!-- css -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/mystyle.css' %}">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+	<!-- js -->
+	<script type="text/javascript" src="{% static 'js/jquery-1.11.3.js' %}"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
+	<script type="text/javascript" src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+
+	<!-- web font -->
+	 <style>
+      @import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+      @import url(http://fonts.googleapis.com/earlyaccess/nanumbrushscript.css);
+      @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+      @import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+      @import url(http://fonts.googleapis.com/earlyaccess/nanummyeongjo.css);
+      @import url(http://fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+      .hn {font-family: 'Hanna';}
+      .nbs {font-family: 'Nanum Brush Script';}
+      .ng {font-family: 'Nanum Gothic';}
+      .ngc {font-family: 'Nanum Gothic Coding';}
+      .nm {font-family: 'Nanum Myeongjo';}
+      .nps {font-family: 'Nanum Pen Script';}
+    </style>
+	<title>News Words</title>
+</head>
+<body>	
+	<!-- ==================== Navbar =================== -->
+	<header id="navbar" class="navbar-fixed-top">
+	{% block navbar %}
+		{% include 'navbar.html' %}
+	{% endblock %}
+	</header>
+	<!-- ==================== Navbar End =================== -->
+
+	<!-- ==================== Container Body =================== -->
+	{% block container %}
+	<section id="content-container">
+		<div  class="container">
+			{% block content %}
+			{% endblock %}
+		</div>
+	</section>
+	{% endblock %}
+	<!-- ==================== Container Body End =================== -->
+</body>
+</html>
