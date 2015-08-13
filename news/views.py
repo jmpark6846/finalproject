@@ -7,9 +7,14 @@ from rest_framework.decorators import api_view, detail_route
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required
 from models import News
+from django import forms
+
 import getNews
 import json
+from forms import LoginForm
 
 class NewsViewSet(viewsets.ModelViewSet):
 	queryset = News.objects.all()
@@ -26,8 +31,33 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 def index(request):
 	return render(request, 'index.html')
 
+def login(request):
+	if request.method == 'POST':
+		form = LoginForm(request.POST)
+		if form.is_valid():
+			email = form.cleaned_data['email']
+			password = form.cleaned_data['password']
+
+			user = authenticate(username=email, password=password)
+
+			if user is not None:
+				auth_login(request, user)
+				return HttpResponseRedirect('/')
+			else:
+				raise forms.ValidationError("이메일과 비밀번호를 확인하세요.")
+
+	else:
+		form = LoginForm()
+
+	return render(request, 'login.html', {'form' : form})
+
+@login_required
+def logout(request):
+	auth_logout(request)
+	return HttpResponseRedirect('/')
+
+@login_required
 def news(request):
-	news_db = getNews.getNews("http://www.ytn.co.kr/news/news_list_0101.html")
-	json_news_db = json.dumps(news_db)
+	getNews.getNews(request.user, "http://www.ytn.co.kr/news/news_list_0101.html")
+	return HttpResponse("success")
 	
-	return HttpResponse(json_data,content_type="application/json")

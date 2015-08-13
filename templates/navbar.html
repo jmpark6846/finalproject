@@ -3,6 +3,18 @@
 		<div class="navbar-header">
 			<a href="/" class="navbar-brand">NewsWords</a>
 		</div>
+
+		<div class="menu collapse navbar-collapse">
+			<ul class="nav navbar-nav navbar-menu">
+				
+				{% if user.is_authenticated %}
+					<li><a href="/mypage/">{{user.username}}</a></li>
+					<li><a href="/logout/">로그아웃</a></li>
+				{% else %}
+					<li><a href="/login/">로그인</a></li>
+				{% endif %}
+			</ul>
+		</div>
 	</div>
 </nav>
 

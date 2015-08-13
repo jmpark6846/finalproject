@@ -60,6 +60,12 @@ REST_FRAMEWORK = {
 }
 ROOT_URLCONF = 'project.urls'
 
+AUTHENTICATION_BACKENDS = (
+    # EmailOrUsernameModelBackend : username대신 user_email로 로그인하기 위해 사용
+    'project.email_auth.EmailOrUsernameModelBackend',
+    'django.contrib.auth.backends.ModelBackend'
+)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
