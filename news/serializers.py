@@ -9,7 +9,7 @@ class NewsSerializer(serializers.HyperlinkedModelSerializer):
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)  
 	class Meta:
 		model = News
-		fields = ('user','title','content','url','link','type')
+		fields = ('user','title','content','url','link','type', 'date')
 		
 class UserSerializer(serializers.HyperlinkedModelSerializer):
 	news = serializers.HyperlinkedIdentityField(view_name='news-detail', many=True, read_only=True)

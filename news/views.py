@@ -11,7 +11,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.decorators import login_required
 from models import News
 from django import forms
-
+import wordgram
 import getNews
 import json
 from forms import LoginForm
@@ -57,7 +57,12 @@ def logout(request):
 	return HttpResponseRedirect('/')
 
 @login_required
-def news(request):
-	getNews.getNews(request.user, "http://www.ytn.co.kr/news/news_list_0101.html")
+def analyze_news(request):
+	getNews.crawlNews(request.user, "http://www.ytn.co.kr/news/news_list_0101.html")
+	contents = getNews.addAllTodayNews()
+	analyzed_words = wordgram.hannanum_analyze_22(contents)
+	result = wordgram.addup(analyzed_words)
+	wordgram.print_dict(result)
 	return HttpResponse("success")
-	
+
+

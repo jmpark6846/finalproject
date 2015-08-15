@@ -4,12 +4,14 @@ import wordgram
 import urllib2
 import sys
 from models import News
+from datetime import datetime
+
 if __name__ == "__main__":
 	reload(sys)
 	sys.setdefaultencoding("utf-8")
 
 # "http://www.ytn.co.kr/news/news_list_0101.html"
-def getNews(user, url):
+def crawlNews(user, url):
 	htmltext = urllib2.urlopen(url).read()
 	soup = BeautifulSoup(htmltext, from_encoding="utf-8")
 
@@ -28,17 +30,23 @@ def getNews(user, url):
 		soup = BeautifulSoup(htmltext, from_encoding="utf-8")
 		title = soup.find('div', attrs={"class","article_tit"}).get_text()
 		content = soup.find('div',attrs={"class","article_paragraph"}).get_text()
-
+		content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
 		News.objects.create(
 			title=title,
 			content=content,
 			link=link,
 			type='society',
 			user=user,
+			date=datetime.now().strftime('%Y-%m-%d'),
 		)
-		
-	# content_dict.append(wordgram.wordgram_analyze_string(content))
-	# print menu[int(i)]+"\n"
-	# result = wordgram.addup(content_dict)
-	# wordgram.print_dict(result)
-	# print result
+
+
+def addAllTodayNews():
+	
+	now = datetime.now().strftime('%Y-%m-%d')
+	news = News.objects.filter(date=now)
+	contents =""
+	for n in news :
+		contents += n.content+"\n"
+	return contents
+

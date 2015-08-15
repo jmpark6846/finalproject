@@ -3,6 +3,6 @@ from django.contrib import admin
 import views
 urlpatterns = [
 
-    url(r'^$', views.news, name='news'),
+    url(r'^analyze/$', views.analyze_news, name='news'),
     
 ]
