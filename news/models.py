@@ -6,18 +6,10 @@ NEWS_TYPE = (
 	('politics', '정치'),
 	('society', '사회'),
 )
-TAGS={
-		'NC':'보통명사',
-		'NQ':'고유명사',
-		# 'NB':'의존명사',	
-		# 'NN':'수사' ,
-		# 'NP':'대명사' , 
-		# 'PV':'동사', 
-		# 'PA':'형용사',
-		# 'PX':'보조 용언',
-		# 'MM':'관형사' , 
-		# 'MA':'부사',
-}	
+TAGS=(
+		('NC','보통명사'),
+		('NQ','고유명사'),
+)
 
 class News(models.Model):
 	user = models.ForeignKey('auth.User', related_name='news')
@@ -33,11 +25,21 @@ class News(models.Model):
 	def __unicode__(self):
 		return self.title
 
+def getTodayNews():
+	now = datetime.now().strftime('%Y-%m-%d')
+	return News.objects.filter(date=now)
+
 class Words(models.Model):
 	value = models.CharField(max_length=50)
 	freq = models.IntegerField(default=0)
-	tag = models.CharField(choices=TAGS, default="NC")
-	news = models.ForeignKey(News, related_name="words")
+	tag = models.CharField(choices=TAGS, default="NC", max_length=100)
+	news = models.ManyToManyField(News, related_name="words")
+	date = models.DateTimeField()
+
 
 	def __unicode__(self):
 		return self.value
+
+def getTodayWords():
+	now = datetime.now().strftime('%Y-%m-%d')
+	return Words.objects.filter(date=now)

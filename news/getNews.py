@@ -41,12 +41,3 @@ def crawlNews(user, url):
 		)
 
 
-def addAllTodayNews():
-	
-	now = datetime.now().strftime('%Y-%m-%d')
-	news = News.objects.filter(date=now)
-	contents =""
-	for n in news :
-		contents += n.content+"\n"
-	return contents
-

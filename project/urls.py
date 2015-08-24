@@ -7,6 +7,7 @@ import settings
 router = DefaultRouter()
 router.register(r'news', views.NewsViewSet)
 router.register(r'users', views.UserViewSet)
+router.register(r'words', views.WordsViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),

@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h1>오늘자 신문 단어들</h1>
+	{% for word in words %}
+		<h2>{{ word.value }}<small>{{ word.freq }}</small></h2>
+	{% endfor %}
+{% endblock %}
