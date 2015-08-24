@@ -73,3 +73,7 @@ def words_list(request):
 		return render(request, 'words/words_list.html', {'words':todayWords})
 
 
+def words_detail(request, id):
+	if request.method == 'GET':
+		word = Words.objects.get(pk=id)
+		return render(request,'words/words_detail.html', {'word':word})

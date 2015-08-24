@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h1>{{word}}</h1>
+	<ul>
+	{% for n in word.news.all %}
+		<li><h3><a href="{{n.link}}">{{n.title}}</a></h3></li>
+	{% endfor %}
+	</ul>
+{% endblock %}

@@ -15,7 +15,7 @@ class WordsSerializer(serializers.HyperlinkedModelSerializer):
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)  
 	class Meta:
 		model = Words
-		fields = ('value','freq','news','tag','date')
+		fields = ('id','value','freq','news','tag','date')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
 	news = serializers.HyperlinkedIdentityField(view_name='news-detail', many=True, read_only=True)
