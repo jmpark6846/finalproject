@@ -1,4 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
-	<h1>Index Header</h1>
+	<ul>
+		<h1>오늘의 핫한 키워드 <small><a href="{% url 'news:words_list' %}">더보기</a></small></h1>
+		{% for word in keywords %}
+			<li><h5>{{word}}<small>{{word.freq}}번 등장</small></h5></li>
+			<ul>
+			{% for n in word.news.all|slice:"0:3" %}
+				<li>{{n.title}}<span class="label label-default">{{n.company}}</span></li>
+			{% endfor %}
+			</ul>
+		{% endfor %}
+	</ul>
 {% endblock %}

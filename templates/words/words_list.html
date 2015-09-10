@@ -1,7 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
-	<h1>오늘자 신문 단어들</h1>
+	<h1>오늘자 신문 단어들
+		<small>
+			{{ words.length }}
+			{% if request.user.is_authenticated %}
+			<a href="{% url 'news:delete_todaynews' %}" class="btn btn-default">오늘 뉴스 삭제 <span class="badge">{{news_size}}</span></a>
+			<a href="{% url 'news:crawl_news' %}" class="btn btn-default">뉴스 수집</a>
+			<a href="{% url 'news:news_analyze' %}" class="btn btn-default">뉴스 분석</a>
+			{% endif %}
+		</small>
+	</h1>
+	
 	{% for word in words %}
-		<h2><a href="{% url 'news:words_detail' word.id%}">{{ word.value }}<small>{{ word.freq }}</small></a></h2>
+	<div class="well word-wrapper">
+		<span>
+			<span>{{ word.rank }}위</span>
+			<a href="{% url 'news:words_detail' word.id%}">
+				<span class="word">{{ word.value }}</span> <span class="badge">{{ word.freq }}</span>
+			</a>
+		</span>
+		<div style="float:right">
+			진보 : 12  |  보수 : 27  |  중립 : 3
+		</div>
+	</div>
 	{% endfor %}
 {% endblock %}

@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-	<h1>{{word}}</h1>
 	<ul>
-	{% for n in word.news.all %}
-		<li><h3><a href="{{n.link}}">{{n.title}}</a></h3></li>
-	{% endfor %}
+		<h1>{{word}}</h1>
+		{% for newspaper, data in news_dic.items %}
+		<div class="x">
+			<hr>
+			<h3>{{newspaper}}</h3>
+			{% for link,title in data.items %}
+				<li><h4><a href="{{link}}">{{title}}</a></h4></li>
+			{% empty %}
+				<li><h4>없음</h4></li>
+			{% endfor %}
+		</div>
+		{% endfor %}
 	</ul>
 {% endblock %}

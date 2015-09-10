@@ -1,0 +1,12 @@
+.navbar{
+    border-bottom: 1px solid #EAEAEA;
+    border-radius: 0;
+}
+
+body, #content-container{
+	background-color: white;
+}
+
+.word{
+	font-weight:700;
+}

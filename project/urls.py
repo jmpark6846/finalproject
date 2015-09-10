@@ -8,6 +8,7 @@ router = DefaultRouter()
 router.register(r'news', views.NewsViewSet)
 router.register(r'users', views.UserViewSet)
 router.register(r'words', views.WordsViewSet)
+router.register(r'company', views.CompanyViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -17,11 +18,7 @@ urlpatterns = [
     url(r'^login/$', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^news/', include(news_urls, namespace='news')),
+
+    url(r'^company/make', views.make_companies, name='make_companies'),
+
 ]
-
-
-if settings.DEBUG:  
-    import debug_toolbar
-    urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ]

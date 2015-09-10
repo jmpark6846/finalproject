@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
-from serializers import NewsSerializer, UserSerializer, WordsSerializer
+from serializers import NewsSerializer, UserSerializer, WordsSerializer, CompanySerializer
 from django.contrib.auth.models import User
 from rest_framework import permissions, renderers, viewsets
 from rest_framework.decorators import api_view, detail_route
@@ -16,64 +16,182 @@ import getNews
 import json
 from forms import LoginForm
 
-class NewsViewSet(viewsets.ModelViewSet):
-	queryset = News.objects.all()
-	serializer_class = NewsSerializer
-	permissions_class = (permissions.IsAuthenticatedOrReadOnly,)
 
-	def perform_create(self, serializer):
-		serializer.save(user=self.request.user)
+class NewsViewSet(viewsets.ModelViewSet):
+    queryset = News.objects.all().order_by('-date')
+    serializer_class = NewsSerializer
+    permissions_class = (permissions.IsAuthenticatedOrReadOnly,)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class WordsViewSet(viewsets.ModelViewSet):
-	queryset = Words.objects.all()
-	serializer_class = WordsSerializer
-	permissions_class = (permissions.IsAuthenticatedOrReadOnly,)
+    queryset = Words.objects.all().order_by('-id')
+    serializer_class = WordsSerializer
+    permissions_class = (permissions.IsAuthenticatedOrReadOnly,)
+
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
-	queryset = User.objects.all()
-	serializer_class = UserSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class CompanyViewSet(viewsets.ModelViewSet):
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializer
+
 
 def index(request):
-	return render(request, 'index.html')
+    hot_keywords = getTodayWords().order_by('-freq')[0:3]
+    latest_news = getTodayNews().order_by('-id')[0:5]
+    content = {
+        'keywords': hot_keywords,
+        'latest_n': latest_news
+    }
+    # todayWords = getTodayWords().order_by('-freq')[0:3]
+    # latest_news = getTodayNews().order_by('-id')[0:5]
+    # content={
+    # 	'woee':todayWords,
+    # 	'len':latest_news
+    # }
+
+    return render(request, 'index.html', content)
+
 
 def login(request):
-	if request.method == 'POST':
-		form = LoginForm(request.POST)
-		if form.is_valid():
-			email = form.cleaned_data['email']
-			password = form.cleaned_data['password']
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
 
-			user = authenticate(username=email, password=password)
+            user = authenticate(username=email, password=password)
 
-			if user is not None:
-				auth_login(request, user)
-				return HttpResponseRedirect('/')
-			else:
-				raise forms.ValidationError("이메일과 비밀번호를 확인하세요.")
+            if user is not None:
+                auth_login(request, user)
+                return HttpResponseRedirect('/')
+            else:
+                raise forms.ValidationError("이메일과 비밀번호를 확인하세요.")
 
-	else:
-		form = LoginForm()
+    else:
+        form = LoginForm()
 
-	return render(request, 'login.html', {'form' : form})
+    return render(request, 'login.html', {'form': form})
+
 
 @login_required
 def logout(request):
-	auth_logout(request)
-	return HttpResponseRedirect('/')
+    auth_logout(request)
+    return HttpResponseRedirect('/')
+
+
+@login_required
+def make_companies(request):
+    Company.objects.create(
+        name="동아일보",
+        tend="보수"
+    )
+    Company.objects.create(
+        name="중앙일보",
+        tend="보수"
+    )
+    Company.objects.create(
+        name="국민일보",
+        tend="보수"
+    )
+    Company.objects.create(
+        name="조선일보",
+        tend="보수"
+    )
+    Company.objects.create(
+        name="한겨례",
+        tend="진보"
+    )
+    Company.objects.create(
+        name="프레시안",
+        tend="진보"
+    )
+    Company.objects.create(
+        name="오마이뉴스",
+        tend="진보"
+    )
+    Company.objects.create(
+        name="경향신문",
+        tend="진보"
+    )
+    return HttpResponseRedirect('/')
+
+
+@login_required
+def crawl_news(request):
+    getNews.crawlNews_chosun(request.user)
+    print "end chosun"
+    getNews.crawlNews_joongang(request.user)
+    print "end joongang"
+    getNews.crawlNews_ohmynews(request.user)
+    print "end ohmynews"
+    getNews.crawlNews_hani(request.user)
+    print "end hani"
+    getNews.crawlNews_pressian(request.user)
+    print "end pressian"
+    getNews.crawlNews_donga(request.user)
+    print "end donga"
+    getNews.crawlNews_km(request.user)
+    print "end km"
+    getNews.crawlNews_seoul(request.user)
+    print "end seoul"
+    getNews.crawlNews_hankook(request.user)
+    print "end hankook"
+
+    return HttpResponseRedirect(reverse('news:words_list'))
+
+
+@login_required
+def delete_todaynews(request):
+    getTodayNews().delete()
+    return HttpResponseRedirect(reverse('news:words_list'))
+
 
 @login_required
 def analyze_news(request):
-	# getNews.crawlNews(request.user, "http://www.ytn.co.kr/news/news_list_0101.html")
-	wordgram.hannanum_analyze_22()
-	return HttpResponse("success")
+    print "start hannanum_analyze_22"
+    analyzed_dics = wordgram.hannanum_analyze_22()
+    print "end hannanum_analyze_22"
+    wordgram.create_words(analyzed_dics)
+    print "end create words"
+    today_words = getTodayWords().order_by('-freq')
+
+    for index, word in enumerate(today_words):
+        word.rank = index + 1
+        word.save()
+
+    return HttpResponseRedirect(reverse('news:words_list'))
+
 
 def words_list(request):
-	if request.method == 'GET':
-		todayWords = getTodayWords().order_by('-freq')
-		return render(request, 'words/words_list.html', {'words':todayWords})
+    news_size = len(getTodayNews())
+    if request.method == 'GET':
+        todayWords = getTodayWords().order_by('-freq')[0:20]
+        return render(request, 'words/words_list.html', {'words': todayWords, 'news_size': news_size})
 
 
 def words_detail(request, id):
-	if request.method == 'GET':
-		word = Words.objects.get(pk=id)
-		return render(request,'words/words_detail.html', {'word':word})
+
+    if request.method == 'GET':
+        word = Word.objects.get(id=id)
+
+        josun = word.news.filter(company="조선일보")
+        josun = word.news.filter(company="중앙일보")
+        josun = word.news.filter(company="동아일보")
+        josun = word.news.filter(company="")
+
+        josun = word.news.filter(company="조선일보")
+        josun = word.news.filter(company="조선일보")
+        josun = word.news.filter(company="조선일보")
+
+        josun = word.news.filter(company="조선일보")
+        josun = word.news.filter(company="조선일보")
+
+
+        return render(request, 'words/words_detail.html', {'word': word, 'news_dic': news_dic})
