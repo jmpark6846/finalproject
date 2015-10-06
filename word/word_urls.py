@@ -6,5 +6,5 @@ urlpatterns = [
     url(r'^(?P<id>\d+)/$', views.words_detail, name='words_detail'),
     url(r'^conserv_word/$', views.get_conserv_word, name='conserv_word'),
     url(r'^prog_word/$', views.get_prog_word, name='prog_word'),
-    url(r'^all_word/$', views.get_all_word, name='all_word'),
+    url(r'^get_words/$', views.get_words, name='get_words'),
 ]

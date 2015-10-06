@@ -7,90 +7,43 @@ $(document).ready(function(){
     };
     $('.grid-stack').gridstack(options);
 
-    all_word_cloud();
-
+    get_words(["진보","보수"]);
+    console.log(JSON.stringify(["진보","보수"]));
     $('.cloud-selector input').click(function(){
         $(this).toggleClass('active');
         word_cloud_btn_clicked();
-
     });
 });
 
 
 function word_cloud_btn_clicked(){
-    if($('#prog_cloud').hasClass('active') && $('#conserv_cloud').hasClass('active')){
-        all_word_cloud();
-
-    }else if($('#prog_cloud').hasClass('active')){
-        prog_word_cloud();
-
-    }else if($('#conserv_cloud').hasClass('active')){
-        conserv_word_cloud();
-
-    }else{
-        $('#word_cloud').html("");
+    var clicked = [];
+    if($('#prog_cloud').hasClass('active')){
+        clicked.push("진보");
     }
-
-}
-
-function all_word_cloud(){
-    $('#word_cloud').html("");
-    $.ajax({
-        url:'/keyword/all_word/',
-        method:'GET',
-        success:function(words){
-            var list=[];
-            for(var i=0;i<words.length;i++){
-                list.push(words[i].fields);
-            }
-            word_cloud_setup(list);
-        }
-    });
-}
-
-function prog_word_cloud(){
-    $('#word_cloud').html("");
-    $.ajax({
-        url:'/keyword/prog_word/',
-        method:'GET',
-        success:function(words){
-
-            var list=[];
-            for(var i=0;i<words.length;i++){
-                list.push(words[i].fields);
-            }
-            word_cloud_setup(list);
-        }
-    });
-}
-function conserv_word_cloud(){
-    $('#word_cloud').html("");
-    $.ajax({
-        url:'/keyword/conserv_word/',
-        method:'GET',
-        success:function(words){
-            var list=[];
-            for(var i=0;i<words.length;i++){
-                list.push(words[i].fields);
-            }
-            word_cloud_setup(list);
-        }
-    });
-}
-function shuffle(array) {
-    var counter = array.length, temp, index;
-
-    while (counter > 0) {
-        index = Math.floor(Math.random() * counter);
-
-        counter--;
-
-        temp = array[counter];
-        array[counter] = array[index];
-        array[index] = temp;
+    if($('#conserv_cloud').hasClass('active')){
+        clicked.push("보수");
     }
+    console.log(clicked);
+    console.log(JSON.stringify(clicked));
+    get_words(clicked);
 
-    return array;
+}
+
+function get_words(clicked){
+
+    $.ajax({
+        url:'/keyword/get_words/',
+        method:'GET',
+        data: {'tend':JSON.stringify(clicked)},
+        success:function(words){
+            var list=[];
+            for(var i=0;i<words.length;i++){
+                list.push(words[i].fields);
+            }
+            word_cloud_setup(list);
+        }
+    });
 }
 
 function word_cloud_setup(json_data){
@@ -132,7 +85,20 @@ function word_cloud_setup(json_data){
         grid.add_widget($('<div data-gs-auto-position="true"><div class="grid-stack-item-content box-'+node.height+'" style="background-color:'+node.color+'">'+node.value+'</div></div>'),
             node.x, node.y, node.width, node.height);
     });
+}
 
+function shuffle(array) {
+    var counter = array.length, temp, index;
 
+    while (counter > 0) {
+        index = Math.floor(Math.random() * counter);
 
+        counter--;
+
+        temp = array[counter];
+        array[counter] = array[index];
+        array[index] = temp;
+    }
+
+    return array;
 }

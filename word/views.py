@@ -23,7 +23,6 @@ def words_detail(request, id):
 
 def get_conserv_word(request):
     companies = Company.objects.filter(tend='보수')
-    conserv_words = Words.objects.none()
     list =[]
     for company in companies:
         today_news = company.get_today_news()
@@ -41,7 +40,6 @@ def get_conserv_word(request):
 
 def get_prog_word(request):
     companies = Company.objects.filter(tend='진보')
-    conserv_words = Words.objects.none()
     list =[]
     for company in companies:
         today_news = company.get_today_news()
@@ -56,7 +54,25 @@ def get_prog_word(request):
     data = serializers.serialize("json", list[0:LIST_SIZE])
     return HttpResponse(data, content_type="application/json")
 
-def get_all_word(request):
-    words = getTodayWords().order_by('-freq')
-    data = serializers.serialize("json", words[0:LIST_SIZE])
+def get_words(request):
+    import json
+    options = json.loads(request.GET.get('tend'));
+    print options
+    list =[]
+    for o in options:
+        companies = Company.objects.filter(tend=o)
+        print o
+        print companies
+        for company in companies:
+            today_news = company.get_today_news()
+            for news in today_news:
+                for word in news.words.all():
+                    if word in list:
+                        pass
+                    else:
+                        list.append(word)
+
+    list.sort(key=lambda x: x.freq, reverse=True)
+    data = serializers.serialize("json", list[0:LIST_SIZE])
+
     return HttpResponse(data, content_type="application/json")
