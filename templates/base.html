@@ -7,13 +7,23 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/flat-ui.css">
     <link rel="stylesheet" href="/static/css/mystyle.css">
-
+    <link rel="stylesheet" href="/static/css/jqcloud.css">
+    <link rel="stylesheet" href="/static/css/word.css">
+    <link rel="stylesheet" href="/static/css/gridstack.min.css">
+    <link rel="stylesheet" href="/static/css/gridstack-extra.min.css">
 
     <!-- js -->
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.3.0/knockout-min.js"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.ui.touch-punch.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/ajax_setup.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/flat-ui.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/word.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jqcloud-1.0.4.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/gridstack.min.js' %}"></script>
 
     <!-- web font -->
      <style>
@@ -44,7 +54,7 @@
     <!-- ==================== Container Body =================== -->
     {% block container %}
     <section id="content-container">
-        <div  class="container">
+        <div  class="container-fluid">
             {% block content %}
             {% endblock %}
         </div>

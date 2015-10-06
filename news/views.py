@@ -9,7 +9,8 @@ from rest_framework.reverse import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from models import *
+from models import Company, News, getTodayNews
+from word.models import Words, getTodayWords
 from django import forms
 import wordgram
 import getNews
@@ -27,7 +28,7 @@ class NewsViewSet(viewsets.ModelViewSet):
 
 
 class WordsViewSet(viewsets.ModelViewSet):
-    queryset = Words.objects.all().order_by('-id')
+    queryset = Words.objects.all().order_by('-freq')
     serializer_class = WordsSerializer
     permissions_class = (permissions.IsAuthenticatedOrReadOnly,)
 
@@ -144,13 +145,13 @@ def crawl_news(request):
     getNews.crawlNews_hankook(request.user)
     print "end hankook"
 
-    return HttpResponseRedirect(reverse('news:words_list'))
+    return HttpResponseRedirect(reverse('keyword:words_list'))
 
 
 @login_required
 def delete_todaynews(request):
     getTodayNews().delete()
-    return HttpResponseRedirect(reverse('news:words_list'))
+    return HttpResponseRedirect(reverse('keyword:words_list'))
 
 
 @login_required
@@ -166,32 +167,4 @@ def analyze_news(request):
         word.rank = index + 1
         word.save()
 
-    return HttpResponseRedirect(reverse('news:words_list'))
-
-
-def words_list(request):
-    news_size = len(getTodayNews())
-    if request.method == 'GET':
-        todayWords = getTodayWords().order_by('-freq')[0:20]
-        return render(request, 'words/words_list.html', {'words': todayWords, 'news_size': news_size})
-
-
-def words_detail(request, id):
-
-    if request.method == 'GET':
-        word = Word.objects.get(id=id)
-
-        josun = word.news.filter(company="조선일보")
-        josun = word.news.filter(company="중앙일보")
-        josun = word.news.filter(company="동아일보")
-        josun = word.news.filter(company="")
-
-        josun = word.news.filter(company="조선일보")
-        josun = word.news.filter(company="조선일보")
-        josun = word.news.filter(company="조선일보")
-
-        josun = word.news.filter(company="조선일보")
-        josun = word.news.filter(company="조선일보")
-
-
-        return render(request, 'words/words_detail.html', {'word': word, 'news_dic': news_dic})
+    return HttpResponseRedirect(reverse('keyword:words_list'))

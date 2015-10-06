@@ -30,16 +30,18 @@ def crawlNews_hankook(user):
 
 		newsList = article_list.findAll('div',attrs={"class","title"})
 		newsLink = []
-		print len(newsList)
 		for news in newsList:
 			newsLink.append("http://www.hankookilbo.com" + news.find('a')['href'])
 
 		for link in newsLink :
 			htmltext = urllib2.urlopen(link).read()
 			soup = BeautifulSoup(htmltext, from_encoding="utf-8")
-			content_div = soup.find('div', attrs={"class",'content-2'})
-			title = content_div.find('h3').get_text()
-			content = content_div.find('div', {"id":"article-body"}).get_text()
+			try:
+				content_div = soup.find('div', attrs={"class",'content-2'})
+				title = content_div.find('h3').get_text()
+				content = content_div.find('div', {"id":"article-body"}).get_text()
+			except AttributeError:
+				print company.name+' AttributeError : ' + link
 
 			if len(content) <= 100:
 				continue
@@ -80,18 +82,20 @@ def crawlNews_seoul(user):
 		for link in newsLink :
 			htmltext = urllib2.urlopen(link).read()
 			soup = BeautifulSoup(htmltext, from_encoding="utf-8")
+			try:
+				title_div = soup.find('div',attrs={"class", "atic_title"})
+				if title_div is None:
+					title = soup.find('div', attrs={"class", "a_title"})
+				else:
+					title = title_div.find('h3').get_text()
 
-			title_div = soup.find('div',attrs={"class", "atic_title"})
-			if title_div is None:
-				title = soup.find('div', attrs={"class", "a_title"})
-			else:
-				title = title_div.find('h3').get_text()
-
-			content = soup.find('div',attrs={"class", "atic_txt1"})
-			if content is None:
-				content = soup.find('div', {"id": "CmAdContent"}).get_text()
-			else:
-				content = content.get_text()
+				content = soup.find('div',attrs={"class", "atic_txt1"})
+				if content is None:
+					content = soup.find('div', {"id": "CmAdContent"}).get_text()
+				else:
+					content = content.get_text()
+			except AttributeError:
+				print company.name+' AttributeError : ' + link
 
 			if len(content) <= 100:
 				continue
@@ -130,15 +134,18 @@ def crawlNews_donga(user):
 
 		for link in newsLink :
 			htmltext = urllib2.urlopen(link).read()
-			soup = BeautifulSoup(htmltext.decode('utf-8'), 'html.parser')
+			try:
+				soup = BeautifulSoup(htmltext.decode('utf-8'), 'html.parser')
 
-			title_div = soup.find('div',attrs={"class","article_title02"})
-			title = title_div.find('h1').get_text()
+				title_div = soup.find('div',attrs={"class","article_title02"})
+				title = title_div.find('h1').get_text()
 
-			content = soup.find('div',attrs={"class","article_txt"}).get_text()
-			script = content.find('function')
-			content = content[:script]
-			##<script> function ...  지우기
+				content = soup.find('div',attrs={"class","article_txt"}).get_text()
+				script = content.find('function')
+				content = content[:script]
+				##<script> function ...  지우기
+			except AttributeError:
+				print company.name+' AttributeError : ' + link
 
 			if len(content) <= 100:
 				continue
@@ -177,12 +184,13 @@ def crawlNews_km(user):
 
 		for link in newsLink :
 			htmltext = urllib2.urlopen(link).read()
-			soup = BeautifulSoup(htmltext, 'html.parser')
-
-			title_div = soup.find('div',attrs={"class","nwsti"})
-			title = title_div.find('h2').get_text()
-
-			content = soup.find('div',attrs={"class","tx"}).get_text()
+			try:
+				soup = BeautifulSoup(htmltext, 'html.parser')
+				title_div = soup.find('div',attrs={"class","nwsti"})
+				title = title_div.find('h2').get_text()
+				content = soup.find('div',attrs={"class","tx"}).get_text()
+			except AttributeError:
+				print company.name+' AttributeError : ' + link
 
 			if len(content) <= 100:
 				continue
@@ -217,11 +225,14 @@ def crawlNews_hani(user):
 
 		for link in newsLink :
 			htmltext = urllib2.urlopen(link).read()
-			soup = BeautifulSoup(htmltext, from_encoding="utf-8")
-			title_div = soup.find('div',attrs={"class","article-head"})
-			title = title_div.find('span',attrs={"class","title"}).get_text()
-			content = soup.find('div',attrs={"class","text"}).get_text()
-			content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+			try:
+				soup = BeautifulSoup(htmltext, from_encoding="utf-8")
+				title_div = soup.find('div',attrs={"class","article-head"})
+				title = title_div.find('span',attrs={"class","title"}).get_text()
+				content = soup.find('div',attrs={"class","text"}).get_text()
+				content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+			except AttributeError:
+				print company.name+' AttributeError : ' + link
 
 			if len(content) <= 100:
 				continue
@@ -255,12 +266,14 @@ def crawlNews_pressian(user):
 
 		for link in newsLink :
 			htmltext = urllib2.urlopen(link).read()
-			soup = BeautifulSoup(htmltext, from_encoding="utf-8")
-			title_div = soup.find('div',attrs={"class","hbox"})
-			title = title_div.find('div',attrs={"class","hboxtitle"}).get_text()
-			content = soup.find('div',attrs={"class","smartOutput"}).get_text()
-			content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
-			print title
+			try:
+				soup = BeautifulSoup(htmltext, from_encoding="utf-8")
+				title_div = soup.find('div',attrs={"class","hbox"})
+				title = title_div.find('div',attrs={"class","hboxtitle"}).get_text()
+				content = soup.find('div',attrs={"class","smartOutput"}).get_text()
+				content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+			except AttributeError:
+				print company.name+' AttributeError : ' + link
 
 			if len(content) <= 100:
 				continue
@@ -298,11 +311,14 @@ def crawlNews_ytn(user):
 		# 긁어온 각 뉴스 url을 열어서 뉴스 제목, 내용을 긁어와 뉴스 객체를 만듭니다.
 		for link in newsLink :
 			htmltext = urllib2.urlopen(link).read()
-			soup = BeautifulSoup(htmltext, from_encoding="utf-8")
-			title = soup.find('div', attrs={"class","article_tit"}).get_text()
-			content = soup.find('div',attrs={"class","article_paragraph"}).get_text()
-			content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
-			
+			try:
+				soup = BeautifulSoup(htmltext, from_encoding="utf-8")
+				title = soup.find('div', attrs={"class","article_tit"}).get_text()
+				content = soup.find('div',attrs={"class","article_paragraph"}).get_text()
+				content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+			except AttributeError:
+				print company.name+' AttributeError : ' + link
+
 			if len(content) <= 100:
 				continue
 			else:
@@ -339,10 +355,12 @@ def crawlNews_joongang(user):
 		for link in newsLink : 
 			htmltext = urllib2.urlopen(link).read()
 			soup = BeautifulSoup(htmltext, from_encoding="utf-8")
-			title_div = soup.find('div',attrs={"class","title"})
-			title = title_div.find('h3').get_text()
-			content = soup.find('div',attrs={"class","article_content"}).get_text()
-			content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+			try:
+				title = soup.find('h1',attrs={"class","headline"}).get_text()
+				content = soup.find('div', attrs={"class","article_body"}).get_text()
+			except AttributeError:
+				print company.name+' AttributeError : ' + link
+				continue
 
 			if len(content) <= 100:
 				continue
@@ -381,17 +399,20 @@ def crawlNews_ohmynews(user):
 		for link in newsLink : 
 			htmltext = urllib2.urlopen(link).read()
 			soup = BeautifulSoup(htmltext, from_encoding="utf-8")
-
-			title = soup.find('h3',attrs={"class","tit_subject"})
-			if title == None:
-				title = soup.find('h5',attrs={"class","tit_subject"})
-
+			try:
+				title = soup.find('h3',attrs={"class","tit_subject"})
 				if title == None:
-					continue
+					title = soup.find('h5',attrs={"class","tit_subject"})
 
-			title = title.get_text()
-			content = soup.find('div',attrs={"class","at_contents"}).get_text()
-			content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+					if title == None:
+						continue
+
+				title = title.get_text()
+				content = soup.find('div',attrs={"class","at_contents"}).get_text()
+				content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+			except AttributeError:
+				print company.name+' AttributeError : ' + link
+				continue
 
 			if len(content) <= 100:
 				continue
@@ -428,10 +449,14 @@ def crawlNews_chosun(user):
 			htmltext = urllib2.urlopen(link).read()
 			soup = BeautifulSoup(htmltext, from_encoding="utf-8")
 			# title
-			title_div = soup.find('div',attrs={"class","news_title_text"})
-			title = title_div.find('h1').get_text()
-			content = soup.find('div',attrs={"class","par"}).get_text()
-			content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+			try:
+				title_div = soup.find('div',attrs={"class","news_title_text"})
+				title = title_div.find('h1').get_text()
+				content = soup.find('div',attrs={"class","par"}).get_text()
+				content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+			except AttributeError:
+				print company.name+' AttributeError : ' + link
+				continue
 
 			if len(content) <= 100:
 				continue

@@ -19,6 +19,11 @@ class Company(models.Model):
     def __unicode__(self):
         return self.name
 
+    def get_today_news(self):
+        now = datetime.now().strftime('%Y-%m-%d')
+        return self.news.filter(date=now)
+
+
 
 class News(models.Model):
     user = models.ForeignKey('auth.User', related_name='news')
@@ -41,18 +46,3 @@ def getTodayNews():
     return News.objects.filter(date=now)
 
 
-class Words(models.Model):
-    value = models.CharField(max_length=50)
-    freq = models.IntegerField(default=0)
-    tag = models.CharField(choices=TAGS, default="NC", max_length=100)
-    news = models.ManyToManyField(News, related_name="words")
-    date = models.DateTimeField()
-    rank = models.IntegerField(default=0)
-
-    def __unicode__(self):
-        return self.value
-
-
-def getTodayWords():
-    now = datetime.now().strftime('%Y-%m-%d')
-    return Words.objects.filter(date=now)

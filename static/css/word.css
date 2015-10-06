@@ -1,0 +1,33 @@
+
+.grid-stack-item-content{
+    background-color:white;
+    text-align:center;
+
+}
+.cloud-selector{
+    text-align:center;
+}
+.cloud-selector input{
+    background-color:white;
+    color:black;
+}
+.grid-stack-item{
+    font-family: 'Nanum Gothic';
+    color:black;
+}
+.grid-stack-item .box-4{
+    font-size:400%;
+    line-height:350px;
+}
+.grid-stack-item .box-3{
+    font-size:300%;
+    line-height:260px;
+}
+.grid-stack-item .box-2{
+    font-size:200%;
+    line-height:170px;
+}
+.grid-stack-item .box-1{
+    font-size:100%;
+    line-height:80px;
+}

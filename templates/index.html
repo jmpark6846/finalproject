@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 	<ul>
-		<h1>오늘의 핫한 키워드 <small><a href="{% url 'news:words_list' %}">더보기</a></small></h1>
+		<h1>오늘의 핫한 키워드 <small><a href="{% url 'keyword:words_list' %}">더보기</a></small></h1>
 		{% for word in keywords %}
 			<li><h5>{{word}}<small>{{word.freq}}번 등장</small></h5></li>
 			<ul>

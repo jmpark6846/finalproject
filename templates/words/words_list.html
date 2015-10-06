@@ -1,27 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-	<h1>오늘자 신문 단어들
-		<small>
-			{{ words.length }}
-			{% if request.user.is_authenticated %}
-			<a href="{% url 'news:delete_todaynews' %}" class="btn btn-default">오늘 뉴스 삭제 <span class="badge">{{news_size}}</span></a>
-			<a href="{% url 'news:crawl_news' %}" class="btn btn-default">뉴스 수집</a>
-			<a href="{% url 'news:news_analyze' %}" class="btn btn-default">뉴스 분석</a>
-			{% endif %}
-		</small>
-	</h1>
-	
-	{% for word in words %}
-	<div class="well word-wrapper">
-		<span>
-			<span>{{ word.rank }}위</span>
-			<a href="{% url 'news:words_detail' word.id%}">
-				<span class="word">{{ word.value }}</span> <span class="badge">{{ word.freq }}</span>
-			</a>
-		</span>
-		<div style="float:right">
-			진보 : 12  |  보수 : 27  |  중립 : 3
-		</div>
-	</div>
-	{% endfor %}
+
+	<div class="grid-stack grid-board">
+
+    </div>
+
+
+    <div class="cloud-selector">
+
+        <input type="button" id='conserv_cloud' class="btn btn-danger active" value="보수">
+        <input type="button" id='prog_cloud' class="btn btn-primary active" value="진보">
+    </div>
+
 {% endblock %}

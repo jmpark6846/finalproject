@@ -3,19 +3,20 @@ from django.forms import widgets
 from rest_framework import serializers
 from rest_framework import permissions
 from models import *
+from word.models import Words
 
 class CompanySerializer(serializers.HyperlinkedModelSerializer):
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)  
 	news = serializers.HyperlinkedIdentityField(view_name='news-detail', many=True, read_only=True)
 	class Meta:
 		model = Company
-		fields = ('name','news')
+		fields = ('name','news','tend')
 
 class NewsSerializer(serializers.HyperlinkedModelSerializer):
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)  
 	class Meta:
 		model = News
-		fields = ('user','title','content','url','link','type', 'date', 'company')
+		fields = ('id','user','title','content','url','link','type', 'date', 'company' ,'words')
 
 class WordsSerializer(serializers.HyperlinkedModelSerializer):
 	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)  

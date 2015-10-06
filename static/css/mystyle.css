@@ -1,12 +1,17 @@
 .navbar{
+    background-color:white;
     border-bottom: 1px solid #EAEAEA;
     border-radius: 0;
 }
 
+.nav .dropdown-menu{
+    border:1px solid #d7d7d7
+}
 body, #content-container{
-	background-color: white;
+	background-color: #dfdfdf;
 }
 
-.word{
-	font-weight:700;
+#content-container{
+    margin-top:10px;
 }
+

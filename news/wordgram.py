@@ -1,15 +1,10 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import get_object_or_404
-from konlpy.tag import Hannanum
-from operator import itemgetter
-from konlpy.utils import pprint
-from collections import OrderedDict, Counter
-from datetime import datetime
-from models import *
-from tfidf import tf_idf_map
-import os
 
-from os import listdir
+from konlpy.tag import Hannanum
+from collections import Counter
+from models import *
+from word.models import Words
+from tfidf import tf_idf_map
 
 # 문장부호제거
 def remove_puc_marks(contents):

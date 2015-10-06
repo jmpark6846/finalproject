@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'news',
+    'word',
     'rest_framework',
     'django_extensions',
 )
@@ -55,7 +56,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 REST_FRAMEWORK = {
-    'PAGE_SIZE' : 10
+    'PAGE_SIZE' : 25
 }
 ROOT_URLCONF = 'project.urls'
 
@@ -116,3 +117,4 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,"static"),
 )
+LIST_SIZE = 25;
