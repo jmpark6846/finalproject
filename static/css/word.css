@@ -2,7 +2,7 @@
 .grid-stack-item-content{
     background-color:white;
     text-align:center;
-
+    border-radius:15px;
 }
 .cloud-selector{
     text-align:center;
@@ -11,8 +11,15 @@
     background-color:white;
     color:black;
 }
+.grid-stack{
+    margin:10px;
+}
 .grid-stack-item{
     font-family: 'Nanum Gothic';
+    color:black;
+    opacity:0.8;
+}
+.grid-stack-item a{
     color:black;
 }
 .grid-stack-item .box-4{
@@ -30,4 +37,129 @@
 .grid-stack-item .box-1{
     font-size:100%;
     line-height:80px;
+}
+div.word-title{
+    min-height:300px;
+    color: #fff;
+    background: #2C3E50;
+    font-size:4.75em;
+    line-height:300px;
+    text-align:center;
+}
+
+div.section{
+    padding:15px 10px;
+}
+.news-section{
+    background-color:#;
+}
+.news-section .col-md-4{
+    border-left : 1px solid #ddd;
+    height: 100%;
+
+}
+.word-news{
+    margin-bottom:15px;
+    padding:5px 10px;
+}
+.news-title{
+    font-size:17px;
+    height:58px;
+}
+.news-company{
+    font-size:15px;
+    color:black;
+}
+div.word-chart{
+    min-height:100px;
+    padding:50px 0px;
+    background:white;
+    text-align:center;
+}
+.word-chart .ct-chart{
+    width:800px;
+    margin:20px auto;
+
+}
+.chartist-tooltip{
+    position: absolute;
+    display: inline-block;
+    min-width: 5em;
+    padding: .5em;
+    background: #F4C63D;
+    color: #453D3F;
+    font-weight: 700;
+    text-align: center;
+    pointer-events: none;
+    z-index: 1;
+}
+.chartist-tooltip:after{
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin-left: -15px;
+    border: 15px solid transparent;
+    border-top-color: #F4C63D;
+}
+
+.ct-label {
+    fill: black;
+    color: black;
+    font-size: 15px;
+    line-height: 1;
+}
+
+.ct-series-a .ct-line {
+    stroke: #3498DB;
+}
+
+.ct-series-a .ct-point {
+    stroke: #3498DB;
+}
+
+.ct-series-b .ct-line {
+    stroke: #F1C40F;
+}
+
+.ct-series-b .ct-point {
+    stroke: #F1C40F;
+}
+
+.ct-series-c .ct-line {
+    stroke: #2ECC71;
+}
+
+.ct-series-c .ct-point {
+    stroke: #2ECC71;
+}
+.ct-series-d .ct-line {
+    stroke: #E74C3C;
+}
+
+.ct-series-d .ct-point {
+    stroke: #E74C3C;
+}
+.badge-all{
+    background-color:#E74C3C;
+}
+.badge-conserv{
+    background-color:#3498DB;
+}
+.badge-prog{
+    background-color:#F1C40F;
+}
+.badge-neutral{
+    background-color:#2ECC71;
+}
+.alert-info a{
+    color:#31708f;
+}
+.alert-success a{
+    color:#3c763d;
+}
+.alert-warning a{
+    color:#8a6d3b;
 }

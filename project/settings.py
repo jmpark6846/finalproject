@@ -117,4 +117,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR,"static"),
 )
-LIST_SIZE = 25;
+LIST_SIZE = 30;
+CHART_DAYS = 5;

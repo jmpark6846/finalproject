@@ -1,17 +1,51 @@
 {% extends 'base.html' %}
 {% block content %}
-	<ul>
-		<h1>{{word}}</h1>
-		{% for newspaper, data in news_dic.items %}
-		<div class="x">
-			<hr>
-			<h3>{{newspaper}}</h3>
-			{% for link,title in data.items %}
-				<li><h4><a href="{{link}}">{{title}}</a></h4></li>
-			{% empty %}
-				<li><h4>없음</h4></li>
-			{% endfor %}
-		</div>
-		{% endfor %}
-	</ul>
+
+	<div class="section nps word-title row">
+		<span class="">{{word.rank}}. </span>{{word.value}}
+	</div>
+    <div class="section news-section row">
+        <div class="col-md-4">
+            <h5>보수</h5>
+            {% for n in conserv_news %}
+            <div class="word-news alert alert-info" role="alert">
+                <a href="{{n.link}}"><div class="news-title">{{n.title|truncatechars:50}}</div></a>
+                <div class="news-company">{{n.company}}</div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <h5>중립</h5>
+            {% for n in neutral_news %}
+            <div class="word-news alert alert-success">
+                <a href="{{n.link}}"><div class="news-title">{{n.title|truncatechars:50}}</div></a>
+                <div class="news-company">{{n.company}}</div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <h5>진보</h5>
+            {% for n in prog_news %}
+            <div class="word-news alert alert-warning">
+                <a href="{{n.link}}"><div class="news-title">{{n.title|truncatechars:50}}</div></a>
+                <div class="news-company">{{n.company}}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="section word-chart row">
+        <h3>최근 등장 횟수</h3>
+        <div class="">
+            <span class="badge badge-all">종합</span>
+            <span class="badge badge-conserv">보수</span>
+            <span class="badge badge-neutral">중립</span>
+            <span class="badge badge-prog">진보</span>
+        </div>
+        <div class="ct-chart ct-major-eleventh"></div>
+    </div>
+
+<script>
+    make_chart('{{word.value}}');
+</script>
+
 {% endblock %}

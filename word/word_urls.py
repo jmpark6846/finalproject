@@ -4,7 +4,6 @@ import views
 urlpatterns = [
     url(r'^$', views.words_list, name='words_list'),
     url(r'^(?P<id>\d+)/$', views.words_detail, name='words_detail'),
-    url(r'^conserv_word/$', views.get_conserv_word, name='conserv_word'),
-    url(r'^prog_word/$', views.get_prog_word, name='prog_word'),
     url(r'^get_words/$', views.get_words, name='get_words'),
+    url(r'^get_chart_series/(?P<value>\w+)/$', views.get_chart_series, name='get_chart_series'),
 ]
