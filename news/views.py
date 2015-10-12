@@ -50,12 +50,6 @@ def index(request):
         'keywords': hot_keywords,
         'latest_n': latest_news
     }
-    # todayWords = getTodayWords().order_by('-freq')[0:3]
-    # latest_news = getTodayNews().order_by('-id')[0:5]
-    # content={
-    # 	'woee':todayWords,
-    # 	'len':latest_news
-    # }
 
     return render(request, 'index.html', content)
 

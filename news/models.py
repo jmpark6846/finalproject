@@ -37,9 +37,25 @@ class News(models.Model):
     class Meta:
         ordering = ('date',)
 
+    def getLikesCount(self):
+        return NewsLikes.objects.filter(news=self).count()
+
+    def getDislikesCount(self):
+        return NewsDislikes.objects.filter(news=self).count()
+
+    likes = property(getLikesCount)
+    dislikes = property(getDislikesCount)
+
     def __unicode__(self):
         return self.title
 
+class NewsLikes(models.Model):
+    news = models.ForeignKey(News)
+    user = models.ForeignKey('auth.User')
+
+class NewsDislikes(models.Model):
+    news = models.ForeignKey(News)
+    user = models.ForeignKey('auth.User')
 
 def getTodayNews():
     now = datetime.now().strftime('%Y-%m-%d')

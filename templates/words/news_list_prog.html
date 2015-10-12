@@ -1,0 +1,12 @@
+<div class="tend">진보</div>
+{% for n in prog_news %}
+<div class="word-news prog-news ">
+    <div class="news-title"><a href="{{n.link}}">{{n.title|truncatechars:60}}</a></div>
+    <div class="word-info">
+        <span class="news-company">{{n.company}}</span><span>#{{n.id}}</span>
+        <span class="news-btn"><button onclick="dislike_news_prog({{word.id}},{{n.id}})" class="btn btn-default">{{n.dislikes}} Dislikes</button></span>
+        <span class="news-btn"><button onclick="like_news_prog({{word.id}},{{n.id}})" class="btn btn-default">{{n.likes}} Likes</button></span>
+    </div>
+</div>
+
+{% endfor %}

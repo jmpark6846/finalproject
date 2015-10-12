@@ -4,8 +4,8 @@ $(document).ready(function(){
 
 function word_list(){
     var options = {
-        cell_height: 80,
-        vertical_margin: 20
+        cell_height: 60,
+        vertical_margin: 20,
     };
 
     $('.grid-stack').gridstack(options);
@@ -95,6 +95,7 @@ function word_cloud_setup_diff(json_data){
         word_data.push({x:0, y:0, width:width, height:height, value:json_data[i].value, color:color_set[color]});
         console.log({x:0, y:0, width:width, height:height, value:json_data[i].value, length:length, color:color});
     }
+
     word_data = shuffle(word_data);
     var grid = $('.grid-stack').data('gridstack');
     grid.remove_all();
@@ -103,17 +104,18 @@ function word_cloud_setup_diff(json_data){
         grid.add_widget($('<div data-gs-auto-position="true"><div class="grid-stack-item-content box-'+node.height+'" style="background-color:'+node.color+'">'+node.value+'</div></div>'),
             node.x, node.y, node.width, node.height);
     });
+
+
 }
 
 function word_cloud_setup(json_data){
     var word_data=[];
     var levels=[1,3,7,15,31], h_levels=[4,3,2,1,1,1];
     var count=0, height=0, width=0, length=0;
-    var color_set=['#f1f2e2','#febd69','#fa6956','#36bfc7','#6f4110','#6d998a','#d7390c','#f0b43c','#f0d3a7']
-    console.log(json_data);
+    var color_set=['#EEE657','#2CC990','#FCB941','#FC6042','#DBCB8E','#FFFFFF','#D4D4D4','#00B5B5','white'];
 
     for(var i=0; i<json_data.length;i++){
-
+        // 크기 결정
         if(i==levels[count]){
             count++;
         }
@@ -132,18 +134,32 @@ function word_cloud_setup(json_data){
                 width = 3;
             }
         }
-
-        word_data.push({x:0, y:0, width:width, height:height, value:json_data[i].value, color:color_set[i%color_set.length],id:json_data[i].id});
+        //color_set[i%color_set.length]
+        word_data.push({x:0, y:0, width:width, height:height, value:json_data[i].value, color:'white',id:json_data[i].id});
         console.log({x:0, y:0, width:width, height:height, value:json_data[i].value, length:length});
     }
     word_data = shuffle(word_data);
     var grid = $('.grid-stack').data('gridstack');
     grid.remove_all();
 
-    _.each(word_data, function (node) {
+    // 이미지 추가
+    grid.add_widget($('<div><div class="grid-stack-item-content box-3 image-1"><div class="alpha-3"></div></div></div>'),
+        0, 0, 3, 3);
+
+    // 단어추가
+    _.each(word_data, function (node, idx) {
+        if(idx == 20){
+            grid.add_widget($('<div ><div class="grid-stack-item-content box-3 image-2"><div class="alpha-3"></div></div></div>'),
+                10, 5, 2, 2);
+        }
         grid.add_widget($('<div data-gs-auto-position="true"><div class="grid-stack-item-content box-'+node.height+'" style="background-color:'+node.color+'"><a href="/keyword/'+node.id+'">'+node.value+'</a></div></div>'),
             node.x, node.y, node.width, node.height);
     });
+
+
+
+
+
 }
 
 function shuffle(array) {
@@ -167,24 +183,14 @@ function make_chart(value){
         url:'/keyword/get_chart_series/'+value,
         method:'GET',
         success:function(data){
-
-            console.log(data);
             chart_setup(data);
         }
     });
 }
 function chart_setup(json_data){
-    var labels = [];
-    for(var i=0;i<json_data[3].length;i++){
-        if(i==0)
-            labels.splice(0,0,['오늘']);
-        else
-            labels.splice(0,0,[i+'일전']);
-    }
-
     var data = {
-        labels: labels,
-        series: json_data
+        labels: json_data['words_date'],
+        series: json_data['data_list']
     };
 
     var options = {
@@ -211,4 +217,62 @@ function chart_setup(json_data){
     };
 
     new Chartist.Line('.ct-chart', data, options);
+}
+
+
+/* ============= Likes ============ */
+function like_news_prog(word_id,news_id){
+    $.ajax({
+        url:'/keyword/'+word_id+'/likes/'+news_id+'/',
+        method:'POST',
+        success:function(response){
+            $('.prog_news_list').html(response);
+        }
+    });
+}
+function like_news_conserv(word_id,news_id){
+    $.ajax({
+        url:'/keyword/'+word_id+'/likes/'+news_id+'/',
+        method:'POST',
+        success:function(response){
+            $('.conserv_news_list').html(response);
+        }
+    });
+}
+function like_news_neutral(word_id,news_id){
+    $.ajax({
+        url:'/keyword/'+word_id+'/likes/'+news_id+'/',
+        method:'POST',
+        success:function(response){
+            $('.neutral_news_list').html(response);
+        }
+    });
+}
+
+function dislike_news_prog(word_id,news_id){
+    $.ajax({
+        url:'/keyword/'+word_id+'/dislikes/'+news_id+'/',
+        method:'POST',
+        success:function(response){
+            $('.prog_news_list').html(response);
+        }
+    });
+}
+function dislike_news_conserv(word_id,news_id){
+    $.ajax({
+        url:'/keyword/'+word_id+'/dislikes/'+news_id+'/',
+        method:'POST',
+        success:function(response){
+            $('.conserv_news_list').html(response);
+        }
+    });
+}
+function dislike_news_neutral(word_id,news_id){
+    $.ajax({
+        url:'/keyword/'+word_id+'/dislikes/'+news_id+'/',
+        method:'POST',
+        success:function(response){
+            $('.neutral_news_list').html(response);
+        }
+    });
 }
