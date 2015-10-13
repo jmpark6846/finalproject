@@ -1,36 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<div class="section hn word-title row gradient-1">
-    <div class="word-date">{{word.date|date:"Y년 M d일"}}, {{word.freq}}번 등장</div>
-    <h1>{{word.rank}}. {{word.value}} </h1>
-    <div> </div>
-</div>
-<div class="section word-chart row">
-    <h3 class="hn">최근 등장 횟수</h3>
-    <div class="">
-        <span class="badge badge-all">종합</span>
-        <span class="badge badge-conserv">보수</span>
-        <span class="badge badge-neutral">중립</span>
-        <span class="badge badge-prog">진보</span>
+<div class="container-fluid">
+    <div class="row">
+        <div class="section hn word-title pattern-green-bg">
+            <div class="wow word-date animated fadeInDown ani-duration ">{{word.date|date:"Y년 M d일"}}, {{word.freq}}번 등장</div>
+            <hr class="wow animated fadeInUp ani-duration">
+            <h1 class="wow animated fadeInUp ani-duration ">{{word.rank}}. {{word.value}} </h1>
+            <div> </div>
+        </div>
     </div>
-    <div class="ct-chart ct-major-eleventh"></div>
-</div>
+    <div class="row">
+        <div class="section word-chart">
+            <h3 class="animated " >최근 등장 횟수</h3>
+            <hr>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="ct-chart ct-major-eleventh col-md-8 wow fadeInUp ani-duration"></div>
+                    <div class="category">
+                        <span class="badge badge-all">종합</span>
+                        <span class="badge badge-conserv">보수</span>
+                        <span class="badge badge-neutral">중립</span>
+                        <span class="badge badge-prog">진보</span>
+                    </div>
+                </div>
 
-<div class="section news-section row">
-    <div class="col-md-4 prog_news_list">
-        {% include 'words/news_list_prog.html' %}
+                <div class="col-md-4">
+                    <ul class="recent-words">
+                        {% for rw in recent_words %}
+                            <li><a href="/keyword/{{rw.id}}">{{rw.freq}}번 등장 ({{rw.date|date:"Y년 M d일"}})</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <div class="col-md-4 neutral_news_list ">
-        {% include 'words/news_list_neutral.html' %}
+    <div class="row">
+        <div class="section">
+            <div class="col-md-4 prog_news_list">
+                {% include 'words/news_list_prog.html' %}
+            </div>
+            <div class="col-md-4 neutral_news_list ">
+                {% include 'words/news_list_neutral.html' %}
+
+            </div>
+            <div class="col-md-4 conserv_news_list">
+                {% include 'words/news_list_conserv.html' %}
+            </div>
+        </div>
+    </div>
+    <div id="disqus_thread" class="section row">
 
     </div>
-    <div class="col-md-4 conserv_news_list">
-        {% include 'words/news_list_conserv.html' %}
-    </div>
-</div>
-<div id="disqus_thread" class="section row">
-
 </div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */

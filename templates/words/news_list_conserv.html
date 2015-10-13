@@ -1,11 +1,11 @@
-<div class="tend">보수</div>
+<div class="tend hn">보수</div>
 {% for n in conserv_news %}
-<div class="word-news conserv-news">
+<div class="word-news conserv-news wow animated fadeInUp ani-duration" data-wow-offset="10">
     <div class="news-title"><a href="{{n.link}}">{{n.title|truncatechars:60}}</a></div>
     <div class="word-info">
         <span class="news-company">{{n.company}}</span><span>#{{n.id}}</span>
-        <span class="news-btn"><button onclick="dislike_news_conserv({{word.id}},{{n.id}})" class="btn btn-default">{{n.dislikes}} Dislikes</button></span>
-        <span class="news-btn"><button onclick="like_news_conserv({{word.id}},{{n.id}})" class="btn btn-default">{{n.likes}} Likes</button></span>
+        <span class="news-btn"><button onclick="dislike_news_conserv({{word.id}},{{n.id}})" class="btn btn-default">{{n.dislikes}} <i class="fa fa-thumbs-down"></i></button></span>
+        <span class="news-btn"><button onclick="like_news_conserv({{word.id}},{{n.id}})" class="btn btn-default">{{n.likes}} <i class="fa fa-thumbs-up"></i></button></span>
     </div>
 </div>
 {% endfor %}

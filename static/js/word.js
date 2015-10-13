@@ -1,31 +1,49 @@
+
 $(document).ready(function(){
     $('.dropdown-toggle').dropdown();
+    $('.cloud-selector i').click(function(){
+        $(this).toggleClass('active');
+        word_cloud_btn_clicked();
+    });
 });
 
 function word_list(){
+    HoldOn.open({
+        theme:"sk-react",//If not given or inexistent theme throws default theme sk-rect
+        message: "<h4> 단어들을 불러오는 중입니다. </h4>",
+        content:"Your HTML Content", // If theme is set to "custom", this property is available
+                                     // this will replace the theme by something customized.
+        backgroundColor:"rgb((0,0,0,0.5)",//Change the background color of holdon with javascript
+                               // Keep in mind is necessary the .css file too.
+        textColor:"rgb((0,0,0,0.0.6)" // Change the font color of the message
+    });
     var options = {
         cell_height: 60,
         vertical_margin: 20,
     };
 
     $('.grid-stack').gridstack(options);
-
     get_words(["진보","보수","중립"]);
 
-    $('.cloud-selector input').click(function(){
-        $(this).toggleClass('active');
-        word_cloud_btn_clicked();
-    });
 }
 function word_cloud_btn_clicked(){
+    HoldOn.open({
+        theme:"sk-react",//If not given or inexistent theme throws default theme sk-rect
+        message: "<h4> 단어들을 불러오는 중입니다. </h4>",
+        content:"Your HTML Content", // If theme is set to "custom", this property is available
+                                     // this will replace the theme by something customized.
+        backgroundColor:"rgb((0,0,0,0.5)",//Change the background color of holdon with javascript
+                               // Keep in mind is necessary the .css file too.
+        textColor:"rgb((0,0,0,0.0.6)" // Change the font color of the message
+    });
     var clicked = [];
-    if($('#prog_cloud').hasClass('active')){
+    if($('.prog-select').hasClass('active')){
         clicked.push("진보");
     }
-    if($('#conserv_cloud').hasClass('active')){
+    if($('.conserv-select').hasClass('active')){
         clicked.push("보수");
     }
-    if($('#neutral_cloud').hasClass('active')){
+    if($('.neutral-select').hasClass('active')){
         clicked.push("중립");
     }
     get_words(clicked);
@@ -44,6 +62,7 @@ function get_words(clicked){
                 list.push(words[i].fields);
             }
             word_cloud_setup(list);
+            HoldOn.close();
         }
     });
 }
@@ -110,7 +129,7 @@ function word_cloud_setup_diff(json_data){
 
 function word_cloud_setup(json_data){
     var word_data=[];
-    var levels=[1,3,7,15,31], h_levels=[4,3,2,1,1,1];
+    var levels=[1,2,7,15,31], h_levels=[3,3,2,1,1,1];
     var count=0, height=0, width=0, length=0;
     var color_set=['#EEE657','#2CC990','#FCB941','#FC6042','#DBCB8E','#FFFFFF','#D4D4D4','#00B5B5','white'];
 
@@ -128,37 +147,22 @@ function word_cloud_setup(json_data){
                 width = 1;
             }else if(length == 3){
                 width = 2;
-            }else if(length == 4){
+            }else if(length >= 4){
                 width = 2;
-            }else if(length >= 5){
-                width = 3;
             }
         }
         //color_set[i%color_set.length]
-        word_data.push({x:0, y:0, width:width, height:height, value:json_data[i].value, color:'white',id:json_data[i].id});
-        console.log({x:0, y:0, width:width, height:height, value:json_data[i].value, length:length});
+        word_data.push({x:6, y:0, width:width, height:height, value:json_data[i].value, color:'white',id:json_data[i].id});
     }
     word_data = shuffle(word_data);
     var grid = $('.grid-stack').data('gridstack');
     grid.remove_all();
 
-    // 이미지 추가
-    grid.add_widget($('<div><div class="grid-stack-item-content box-3 image-1"><div class="alpha-3"></div></div></div>'),
-        0, 0, 3, 3);
-
     // 단어추가
     _.each(word_data, function (node, idx) {
-        if(idx == 20){
-            grid.add_widget($('<div ><div class="grid-stack-item-content box-3 image-2"><div class="alpha-3"></div></div></div>'),
-                10, 5, 2, 2);
-        }
-        grid.add_widget($('<div data-gs-auto-position="true"><div class="grid-stack-item-content box-'+node.height+'" style="background-color:'+node.color+'"><a href="/keyword/'+node.id+'">'+node.value+'</a></div></div>'),
+        grid.add_widget($('<div data-gs-auto-position="true"><div class="grid-stack-item-content box-'+node.height+'" style="background-color:'+node.color+'"><a href="/keyword/'+node.id+'">'+node.value+'</a></div><div class="tail"></div></div>'),
             node.x, node.y, node.width, node.height);
     });
-
-
-
-
 
 }
 
@@ -215,7 +219,6 @@ function chart_setup(json_data){
         ]
 
     };
-
     new Chartist.Line('.ct-chart', data, options);
 }
 

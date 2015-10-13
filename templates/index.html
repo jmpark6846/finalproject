@@ -1,14 +1,95 @@
 {% extends 'base.html' %}
+{% block navbar %}
+        {% include 'navbar-index.html' %}
+{% endblock %}
 {% block content %}
-	<ul>
-		<h1>오늘의 핫한 키워드 <small><a href="{% url 'keyword:words_list' %}">더보기</a></small></h1>
-		{% for word in keywords %}
-			<li><h5>{{word}}<small>{{word.freq}}번 등장</small></h5></li>
-			<ul>
-			{% for n in word.news.all|slice:"0:3" %}
-				<li>{{n.title}}<span class="label label-default">{{n.company}}</span></li>
-			{% endfor %}
-			</ul>
-		{% endfor %}
-	</ul>
+
+<section id="header" class="pattern-green-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <!-- Heading -->
+                <h2 class="animated fadeInDown"><strong>다양한</strong> 시각으로 사회를 보는 방법</h2>
+                <p class="animated fadeInDown">
+                    뉴스워즈에서 매일 그날의 뉴스 키워드들을 파악하고, 다양한 언론사들의 뉴스를 한 곳에서 만나보세요!<br>
+                    여러 정치 성향의 뉴스들로 사회를 보는 시각을 넓혀 드립니다.
+                </p>
+                <br>
+                <a href="/keyword/"><div class="btngoose ani-delay ani-duration animated fadeInDown">
+                    시작하기!
+                </div></a>
+                <!-- Heading End -->
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <div class="imac animated fadeIn">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="how">
+    <div class="container">
+        <div class="row">
+            <h2>뉴스워즈의 동작 방법</h2>
+            <p>아래 세 가지 방법을 이용해서 서비스가 이뤄집니다.</p>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="icon-wrap wow fadeIn animated" >
+                    <i class="fa fa-newspaper-o icon"></i>
+                    <h3>뉴스 수집</h3>
+                    <p>보수, 중립, 진보 각 정치 진영 마다 4개씩 총 12개의 언론사에서 뉴스를 수집합니다.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="icon-wrap wow fadeIn animated" >
+                    <i class="fa fa-search icon"></i>
+                    <h3>뉴스 분석 및 키워드 선정</h3>
+                    <p>매일 약 400개의 뉴스 기사를 분석하여, 뉴스에 나타난 단어들의 빈도를 측정하여 키워드를 선정합니다.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="icon-wrap wow fadeIn animated">
+                    <i class="fa fa-line-chart icon"></i>
+                    <h3>비교 및 시각화</h3>
+                    <p>한 키워드에 대한 정치 성향이 다른 뉴스들을 비교해서 보고 출현 빈도를 날짜와 관련해서 시각화합니다.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<section id="news">
+     <div class="container">
+         <div class="row">
+             <h2>언론사 목록</h2>
+         </div>
+         <hr>
+         <div class="row">
+             <div class="container">
+                 <div class="col-md-4 wow fadeIn animated">
+                     <img src="/static/image/p1.png">
+                     <img src="/static/image/p2.jpg">
+                     <img src="/static/image/p3.png">
+
+                 </div>
+                 <div class="col-md-4 wow fadeIn animated">
+                     <img src="/static/image/n1.png">
+                     <img src="/static/image/n2.png">
+
+                 </div>
+                 <div class="col-md-4 wow fadeIn animated">
+                    <img src="/static/image/c1.png">
+                    <img src="/static/image/c2.png">
+                    <img src="/static/image/c3.png">
+                    <img src="/static/image/c4.png">
+                 </div>
+             </div>
+        </div>
+
+    </div>
+
+</section>
 {% endblock %}

@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.core import serializers
 from django.http import HttpResponse
 from news.models import getTodayNews
-from models import getTodayWords, Words
+from models import getTodayWords, Words, getWordsAt
 from news.models import Company, News, NewsLikes, NewsDislikes
 from project.settings import LIST_SIZE, CHART_DAYS
 from django.contrib.auth.decorators import login_required
@@ -12,14 +12,21 @@ from django.contrib.auth.decorators import login_required
 
 def words_list(request):
     news_size = len(getTodayNews())
-    return render(request, 'words/words_list.html', {'news_size': news_size})
+    recent_words_lists=[]
+    import datetime
+    for i in range(0,3):
+        date = datetime.datetime.now() - datetime.timedelta(days=i)
+        words=getWordsAt(date)
+        recent_words_lists.append(words[:10])
+    date = datetime.datetime.now()
+    return render(request, 'words/words_list.html', {'news_size': news_size, 'recent_words_lists':recent_words_lists, 'date':date})
 
 
 def words_detail(request, id):
     if request.method == 'GET':
 
         word = Words.objects.get(id=id)
-        all_words = Words.objects.filter(value=word.value).order_by('date')
+        recent_words = Words.objects.filter(value=word.value).order_by('-date')[:CHART_DAYS]
         conserv_news = News.objects.none()
         prog_news = News.objects.none()
         neutral_news = News.objects.none()
@@ -42,7 +49,7 @@ def words_detail(request, id):
 
         context = {
             'word':word,
-            'all_words':all_words,
+            'recent_words':recent_words,
             'conserv_news':conserv_news,
             'prog_news':prog_news,
             'neutral_news':neutral_news,
@@ -102,6 +109,7 @@ def get_words(request):
     data = serializers.serialize("json", list[0:LIST_SIZE])
 
     return HttpResponse(data, content_type="application/json")
+
 
 def get_words_diff(request):
     import json

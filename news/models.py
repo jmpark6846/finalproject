@@ -62,3 +62,5 @@ def getTodayNews():
     return News.objects.filter(date=now)
 
 
+
+

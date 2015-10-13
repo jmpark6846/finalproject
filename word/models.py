@@ -30,3 +30,7 @@ class Words(models.Model):
 def getTodayWords():
     now = datetime.now().strftime('%Y-%m-%d')
     return Words.objects.filter(date=now)
+
+def getWordsAt(date):
+    words = Words.objects.filter(date=date.strftime('%Y-%m-%d')).order_by("-freq");
+    return words
