@@ -1,17 +1,24 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core import serializers
-from django.http import HttpResponse
 from news.models import getTodayNews
 from models import getTodayWords, Words, getWordsAt
+from rest_framework.reverse import reverse
 from news.models import Company, News, NewsLikes, NewsDislikes
 from project.settings import LIST_SIZE, CHART_DAYS
 from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required
+def delete_todaywords(request):
+    getTodayWords().delete()
+    return HttpResponseRedirect(reverse('keyword:words_list'))
+
 
 def words_list(request):
     news_size = len(getTodayNews())
+    words_size = len(getTodayWords())
     recent_words_lists=[]
     import datetime
     for i in range(0,3):
@@ -19,7 +26,13 @@ def words_list(request):
         words=getWordsAt(date)
         recent_words_lists.append(words[:10])
     date = datetime.datetime.now()
-    return render(request, 'words/words_list.html', {'news_size': news_size, 'recent_words_lists':recent_words_lists, 'date':date})
+
+    context = {'news_size': news_size,
+               'words_size':words_size,
+               'recent_words_lists':recent_words_lists,
+               'date':date
+    }
+    return render(request, 'words/words_list.html', context)
 
 
 def words_detail(request, id):
@@ -37,7 +50,7 @@ def words_detail(request, id):
 
         for c in conserv_com:
             conserv_news = conserv_news | word.news.filter(company=c)
-        sorted(prog_news, key=lambda x: x.likes)
+        sorted(conserv_news, key=lambda x: x.likes)
 
         for c in prog_com:
             prog_news = prog_news | word.news.filter(company=c)

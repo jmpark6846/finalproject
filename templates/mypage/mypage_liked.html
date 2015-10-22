@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row mypage-body">
+        {% include 'mypage/mypage_menu.html' %}
+
+        <!-- ========== right panel =========== -->
+        <div class="col-md-9">
+            <div class="row">
+                <div class="ct-chart">
+
+                </div>
+            </div>
+            <!-- ======== recommended news list ========= -->
+            <div class="row">
+                {% for l in likes|slice:":10" %}
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <a href="#">
+                                    <p>{{l.news.title|truncatechars:40}}</p>
+                                </a>
+                            </div>
+                            <div class="news-badges">
+                                <p class="">{{l.news.likes}} <i class="fa fa-thumbs-up liked"></i></p>
+                                <span class="badge">{{l.news.company.tend}}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- // ======== recommended news list ========= -->
+        </div>
+    </div>
+</div>
+<script>
+    liked_news_chart();
+</script>
+{% endblock %}

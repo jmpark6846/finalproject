@@ -1,6 +1,6 @@
 <div class="tend hn">보수</div>
 {% for n in conserv_news %}
-<div class="word-news conserv-news wow animated fadeInUp ani-duration" data-wow-offset="10">
+<div class="word-news conserv-news">
     <div class="news-title"><a href="{{n.link}}">{{n.title|truncatechars:60}}</a></div>
     <div class="word-info">
         <span class="news-company">{{n.company}}</span><span>#{{n.id}}</span>

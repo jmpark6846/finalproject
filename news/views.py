@@ -151,8 +151,10 @@ def delete_todaynews(request):
 @login_required
 def analyze_news(request):
     print "start hannanum_analyze_22"
+    # 형태소 분석
     analyzed_dics = wordgram.hannanum_analyze_22()
     print "end hannanum_analyze_22"
+    # 분석한 정보를 담은 딕셔너리를 가지고 단어 객체 만들기
     wordgram.create_words(analyzed_dics)
     print "end create words"
     today_words = getTodayWords().order_by('-freq')
@@ -162,3 +164,4 @@ def analyze_news(request):
         word.save()
 
     return HttpResponseRedirect(reverse('keyword:words_list'))
+

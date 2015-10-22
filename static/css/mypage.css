@@ -1,0 +1,34 @@
+.mypage-body{
+    background-color: white;
+    margin-top: 20px;
+    padding: 30px 10px 10px;
+    min-height:700px;
+}
+.mypage-body .ct-label{
+    text-align:center;
+    color:white;
+    font-weight: 700;
+    fill: white;
+    font-size:20px;
+}
+
+.ct-series-b .ct-slice-pie {
+    fill: #FFC300;
+}
+
+.main-news-header{
+    margin-bottom: 30px;
+}
+.carousel-inner div.item{
+    width:100%;
+    height:300px;
+    background-color:#3E4651;
+    color:white;
+    padding:20px 50px;
+}
+.item p{
+    color:white;
+}
+i.liked{
+    color:blue;
+}

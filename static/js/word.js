@@ -5,18 +5,26 @@ $(document).ready(function(){
         $(this).toggleClass('active');
         word_cloud_btn_clicked();
     });
+    $('#collect_news').click(function(){
+        HoldOn_custom("뉴스를 수집 중입니다..");
+    });
+    $('#analyze_news').click(function(){
+        HoldOn_custom("뉴스를 분석 중입니다..");
+    });
 });
-
-function word_list(){
+function HoldOn_custom(msg){
     HoldOn.open({
         theme:"sk-react",//If not given or inexistent theme throws default theme sk-rect
-        message: "<h4> 단어들을 불러오는 중입니다. </h4>",
+        message: "<h4> "+msg+" </h4>",
         content:"Your HTML Content", // If theme is set to "custom", this property is available
                                      // this will replace the theme by something customized.
         backgroundColor:"rgb((0,0,0,0.5)",//Change the background color of holdon with javascript
                                // Keep in mind is necessary the .css file too.
         textColor:"rgb((0,0,0,0.0.6)" // Change the font color of the message
     });
+}
+function word_list(){
+    HoldOn_custom("단어들을 불러오는 중입니다..");
     var options = {
         cell_height: 60,
         vertical_margin: 20,
@@ -27,15 +35,7 @@ function word_list(){
 
 }
 function word_cloud_btn_clicked(){
-    HoldOn.open({
-        theme:"sk-react",//If not given or inexistent theme throws default theme sk-rect
-        message: "<h4> 단어들을 불러오는 중입니다. </h4>",
-        content:"Your HTML Content", // If theme is set to "custom", this property is available
-                                     // this will replace the theme by something customized.
-        backgroundColor:"rgb((0,0,0,0.5)",//Change the background color of holdon with javascript
-                               // Keep in mind is necessary the .css file too.
-        textColor:"rgb((0,0,0,0.0.6)" // Change the font color of the message
-    });
+    HoldOn_custom("단어들을 불러오는 중입니다..");
     var clicked = [];
     if($('.prog-select').hasClass('active')){
         clicked.push("진보");

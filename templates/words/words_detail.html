@@ -3,19 +3,19 @@
 <div class="container-fluid">
     <div class="row">
         <div class="section hn word-title pattern-green-bg">
-            <div class="wow word-date animated fadeInDown ani-duration ">{{word.date|date:"Y년 M d일"}}, {{word.freq}}번 등장</div>
-            <hr class="wow animated fadeInUp ani-duration">
-            <h1 class="wow animated fadeInUp ani-duration ">{{word.rank}}. {{word.value}} </h1>
+            <div class="">{{word.date|date:"Y년 M d일"}}, {{word.freq}}번 등장</div>
+            <hr >
+            <h1 >{{word.rank}}. {{word.value}} </h1>
             <div> </div>
         </div>
     </div>
     <div class="row">
         <div class="section word-chart">
-            <h3 class="animated " >최근 등장 횟수</h3>
+            <h3 class="" >최근 등장 횟수</h3>
             <hr>
             <div class="row">
                 <div class="col-md-8">
-                    <div class="ct-chart ct-major-eleventh col-md-8 wow fadeInUp ani-duration"></div>
+                    <div class="ct-chart ct-major-eleventh col-md-8"></div>
                     <div class="category">
                         <span class="badge badge-all">종합</span>
                         <span class="badge badge-conserv">보수</span>
@@ -37,14 +37,10 @@
     </div>
     <div class="row">
         <div class="section">
-            <div class="col-md-4 prog_news_list">
+            <div class="col-md-6 prog_news_list">
                 {% include 'words/news_list_prog.html' %}
             </div>
-            <div class="col-md-4 neutral_news_list ">
-                {% include 'words/news_list_neutral.html' %}
-
-            </div>
-            <div class="col-md-4 conserv_news_list">
+            <div class="col-md-6 conserv_news_list">
                 {% include 'words/news_list_conserv.html' %}
             </div>
         </div>

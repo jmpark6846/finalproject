@@ -42,17 +42,18 @@ def hannanum_analyze_22():
 	"""
 	pos_dics=
 	{
-		news.id : dictionary,
-		news.id : dictionary,
+		news.id : 분석 결과 dictionary,
+		news.id : 분석 결과 dictionary,
+		...
 	}
 	"""
 	pos_dics = {}
 	news = getTodayNews()
 	
 	for n in news :
-		# 뉴스내용으로 품사 분석해서 딕셔너리로 반환
-		n.content = remove_puc_marks(n.content)
-		words_dic = h.pos(n.content,22)
+		content = n.content
+		content = remove_puc_marks(content) # 문장 부호 제거
+		words_dic = h.pos(content,22)			# 형태소 제거
 		dictionary={}
 		for t in words_dic:
 			word = t[0]
@@ -66,14 +67,10 @@ def hannanum_analyze_22():
 		dictionary=remove_stopwords(dictionary)	# 불용어 제거
 		pos_dics[n]=dictionary
 
-	# tfidf
 	print "tf-idf"
-	analyzed_dics=tf_idf_map(pos_dics)
+	analyzed_dics=tf_idf_map(pos_dics) 			# tfidf 계산
 
 	return analyzed_dics
-
-	# dictionary=Counter(dictionary).most_common(5)
-	# 각 뉴스별 단어 딕셔너리를 디비에 추가한다.
 
 
 def create_words(analyzed_dics):

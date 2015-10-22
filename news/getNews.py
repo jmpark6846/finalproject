@@ -344,7 +344,7 @@ def crawlNews_joongang(user):
 		htmltext = urllib2.urlopen(url[i]).read()
 
 		soup = BeautifulSoup(htmltext, from_encoding="utf-8")
-		
+
 		# 기사 읽기
 		soup = soup.find('div',attrs={"class","bd"})
 		newsList = soup.findAll('li')
@@ -352,7 +352,7 @@ def crawlNews_joongang(user):
 		for news in newsList:
 			newsLink.append(news.find('a')['href'])
 
-		for link in newsLink : 
+		for link in newsLink :
 			htmltext = urllib2.urlopen(link).read()
 			soup = BeautifulSoup(htmltext, from_encoding="utf-8")
 			try:
@@ -374,21 +374,21 @@ def crawlNews_joongang(user):
 					date=datetime.now().strftime('%Y-%m-%d'),
 					company=company,
 				)
-	
+
 def crawlNews_ohmynews(user):
 	NEWS_TYPE = {
 		'400':"politics",
 		'200':"society",
 	}
-	
+
 	company = Company.objects.get(name="오마이뉴스")
 	for i in NEWS_TYPE.keys() :
 		url = "http://www.ohmynews.com/NWS_Web/ArticlePage/Total_Article.aspx?PAGE_CD=C0"+i
 
-		# html source 
+		# html source
 		htmltext = urllib2.urlopen(url).read()
 		soup = BeautifulSoup(htmltext, from_encoding="utf-8")
-		
+
 		# 기사 읽기
 		newsList = soup.findAll('div',attrs={"class","news_list"})
 		newsLink = []
@@ -396,7 +396,7 @@ def crawlNews_ohmynews(user):
 		for news in newsList:
 			newsLink.append('http://www.ohmynews.com'+news.find('a')['href'])
 
-		for link in newsLink : 
+		for link in newsLink :
 			htmltext = urllib2.urlopen(link).read()
 			soup = BeautifulSoup(htmltext, from_encoding="utf-8")
 			try:

@@ -23,22 +23,22 @@
         </div>
 
     </div>
-    <div class="recent-word-list list-section row gray-overlay">
-        {% for list in recent_words_lists reversed %}
-            <div class="word-list col-md-4">
-                <div class="">
-                    <div class="list-group">
-                        <div class="list-group-item active"><center>{{list.0.date|date:"Y년 M d일"}}</center></div>
-                    {% for w in list %}
-                        <a href="/keyword/{{w.id}}/" class="list-group-item">{{w.rank}}. {{w.value}}
-                            <span class="badge">{{w.freq}}</span>
-                        </a>
-                    {% endfor %}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+    <!--<div class="recent-word-list list-section row gray-overlay">-->
+        <!--{% for list in recent_words_lists reversed %}-->
+            <!--<div class="word-list col-md-4">-->
+                <!--<div class="">-->
+                    <!--<div class="list-group">-->
+                        <!--<div class="list-group-item active"><center>{{list.0.date|date:"Y년 M d일"}}</center></div>-->
+                    <!--{% for w in list %}-->
+                        <!--<a href="/keyword/{{w.id}}/" class="list-group-item">{{w.rank}}. {{w.value}}-->
+                            <!--<span class="badge">{{w.freq}}</span>-->
+                        <!--</a>-->
+                    <!--{% endfor %}-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--{% endfor %}-->
+    <!--</div>-->
 </div>
     <script>word_list()</script>
 {% endblock %}

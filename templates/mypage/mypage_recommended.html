@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row mypage-body">
+        {% include 'mypage/mypage_menu.html' %}
+
+        <!-- ========== right panel =========== -->
+        <div class="col-md-9">
+
+            <!-- ======== main-news-header carousel ========== -->
+            <div class="row main-news-header">
+                <h4>유저들이 관심가진 뉴스 top3</h4>
+                <div class="col-md-12">
+                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carousel-example-generic" data-slide-to="0" class=""></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="1" class=""></li>
+                            <li data-target="#carousel-example-generic" data-slide-to="2" class="active"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <a href="{{news.0.link}}">
+                                    <h3>{{news.0.title}}</h3>
+                                    <p>{{news.0.content|truncatechars:100}}</p>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="{{news.1.link}}">
+                                    <h3>{{news.1.title}}</h3>
+                                    <p>{{news.1.content|truncatechars:100}}</p>
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a href="{{news.2.link}}">
+                                    <h3>{{news.2.title}}</h3>
+                                    <p>{{news.2.content|truncatechars:100}}</p>
+                                </a>
+                            </div>
+                        </div>
+                        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <!-- // ======== main-news-header carousel ========== -->
+
+            <!-- ======== recommended news list ========= -->
+            <div class="row">
+                {% for n in news|slice:":10" %}
+                    <div class="col-sm-4 col-lg-4 col-md-4">
+                        <div class="thumbnail">
+                            <div class="caption">
+                                <a href="#">
+                                    <p>{{n.title|truncatechars:40}}</p>
+                                </a>
+                            </div>
+                            <div class="news-badges">
+                                <p class="">{{n.likes}} <i class="fa fa-thumbs-up"></i></p>
+                                <span class="badge">{{n.company.tend}}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- // ======== recommended news list ========= -->
+        </div>
+    </div>
+</div>
+{% endblock %}

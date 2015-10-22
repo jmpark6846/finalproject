@@ -12,15 +12,9 @@
 
         <div class="collapse navbar-collapse navbar-right" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-menu">
-                <li><a href="{% url 'keyword:words_list'%}">뉴스 키워드</a></li>
+                <li><a href="{% url 'keyword:words_list'%}">오늘의 키워드</a></li>
                 {% if user.is_authenticated %}
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.username}} <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/logout/">로그아웃</a></li>
-                        </ul>
-                    </li>
-
+                  <li><a href="{% url 'mypage:users_mypage'%}">{{user.username}}</a></li>
                 {% else %}
                     <li><a href="/login/">로그인</a></li>
                 {% endif %}
@@ -28,9 +22,10 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">관리자 메뉴 <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
+                            <li id="collect_news"><a href="{% url 'news:crawl_news' %}">뉴스 수집 </a></li>
+                            <li id="analyze_news"><a href="{% url 'news:news_analyze' %}">뉴스 분석</a></li>
                             <li><a href="{% url 'news:delete_todaynews' %}">뉴스 삭제 <span class="badge">{{news_size}}</span></a></li>
-                            <li><a href="{% url 'news:crawl_news' %}">뉴스 수집 </a></li>
-                            <li><a href="{% url 'news:news_analyze' %}">뉴스 분석</a></li>
+                            <li><a href="{% url 'keyword:delete_todaywords' %}">단어 삭제 <span class="badge">{{words_size}}</span></a></li>
                         </ul>
                     </li>
                 {% endif %}
@@ -53,15 +48,9 @@
 
         <div class="collapse navbar-collapse navbar-right" id="navbar-collapse">
             <ul class="nav navbar-nav navbar-menu">
-                <li><a href="{% url 'keyword:words_list'%}">뉴스 키워드</a></li>
+                <li><a href="{% url 'keyword:words_list'%}">오늘의 키워드</a></li>
                 {% if user.is_authenticated %}
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{user.username}} <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/logout/">로그아웃</a></li>
-                        </ul>
-                    </li>
-
+                  <li><a href="{% url 'mypage:users_mypage'%}">{{user.username}}</a></li>
                 {% else %}
                     <li><a href="/login/">로그인</a></li>
                 {% endif %}
@@ -69,9 +58,10 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">관리자 메뉴 <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
+                            <li id="collect_news"><a href="{% url 'news:crawl_news' %}">뉴스 수집 </a></li>
+                            <li id="analyze_news"><a href="{% url 'news:news_analyze' %}">뉴스 분석</a></li>
                             <li><a href="{% url 'news:delete_todaynews' %}">뉴스 삭제 <span class="badge">{{news_size}}</span></a></li>
-                            <li><a href="{% url 'news:crawl_news' %}">뉴스 수집 </a></li>
-                            <li><a href="{% url 'news:news_analyze' %}">뉴스 분석</a></li>
+                            <li><a href="{% url 'keyword:delete_todaywords' %}">단어 삭제 <span class="badge">{{words_size}}</span></a></li>
                         </ul>
                     </li>
                 {% endif %}

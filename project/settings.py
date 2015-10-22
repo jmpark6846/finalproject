@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'news',
     'word',
     'rest_framework',
+    'mypage',
     'django_extensions',
 )
 INTERNAL_IPS = ('127.0.0.1', )  
@@ -119,3 +120,5 @@ STATICFILES_DIRS = (
 )
 LIST_SIZE = 30;
 CHART_DAYS = 5;
+RECOMMEND_SIZE=10;
+LOGIN_URL = '/login/'
