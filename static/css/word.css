@@ -1,4 +1,7 @@
 /* ========= grid layout =========*/
+.grid-layout{
+    background-color:#F3F3F3;
+}
 .main-pattern-bg{
     background-color: #3E4651;
     background-image: url(/static/image/pattern-1.png);
@@ -131,29 +134,23 @@
 
 
 /* ============ word detail ============= */
-div.tend{
-    font-size:28px;
-    font-weight:700;
-    text-align:center;
-    color:white;
+.word-detail{
+    max-width:1000px!important;
 }
 div.word-title{
-    min-height:300px;
-    color: #fff;
-    text-align:center;
+    margin: 20px 10px;
+    color: black;
 }
 .word-title h1{
-    font-size: 85px;
+    font-size: 50px;
     font-weight:300;
-    margin-top: 10px;
 }
 .word-date{
-    color:#777777;
-    font-size:30px;
-
+    font-size:18px;
+    color:gray;
 }
 .section{
-    padding:80px 20px;
+
 }
 .section hr{
     width: 100px;
@@ -170,9 +167,11 @@ div.word-title{
 }
 
 .news-title{
-    font-size:17px;
-    font-weight:700;
-    height: 70px;
+    font-size:14px;
+}
+.news-meta{
+    font-size:12px;
+    color:gray;
 }
 .news-info{
     background-color:white;
@@ -181,12 +180,7 @@ div.word-title{
 
 .word-news{
     background: white;
-    padding: 20px;
-    border-radius: 5px;
-    background-clip: padding-box;
-    border-top: 3px solid #c4e7d9;
-    position: relative;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .word-news:after{
@@ -210,27 +204,21 @@ div.word-title{
 .word-news.prog{
     background-color:#f1c40f;
 }
-.news-company{
-    font-size:15px;
-    color:black;
-}
 .news-btn{
     float:right;
     margin-left:10px;
-}
-
-.prog-news{
-    border-top: 3px solid #EADEA7;
+    cursor:pointer;
 }
 .prog-news a{
     color: #9A7918;
 }
-.conserv-news{
-    border-top: 3px solid #C4D0E7;
-}
 .conserv-news a{
-    color:#655F8C;
+    color:hsl(0, 78%, 57%);
 }
+.nav-tabs{
+    margin-bottom:20px;
+}
+/* ============= chart ============= */
 div.word-chart{
     min-height:100px;
     padding-left:3%;
@@ -249,15 +237,8 @@ div.word-chart h3{
     margin-top:20px;
 }
 .word-chart .ct-chart{
-    width:800px;
     margin:20px auto;
 
-}
-
-.alpha-3{
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.3);
 }
 
 .chartist-tooltip{

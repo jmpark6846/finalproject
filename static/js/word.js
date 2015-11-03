@@ -196,7 +196,7 @@ function chart_setup(json_data){
         labels: json_data['words_date'],
         series: json_data['data_list']
     };
-
+//    console.log(data);
     var options = {
 
         showPoint: true,
@@ -224,6 +224,7 @@ function chart_setup(json_data){
 
 
 /* ============= Likes ============ */
+
 function like_news_prog(word_id,news_id){
     $.ajax({
         url:'/keyword/'+word_id+'/likes/'+news_id+'/',
@@ -261,6 +262,7 @@ function dislike_news_prog(word_id,news_id){
         }
     });
 }
+
 function dislike_news_conserv(word_id,news_id){
     $.ajax({
         url:'/keyword/'+word_id+'/dislikes/'+news_id+'/',
@@ -270,6 +272,7 @@ function dislike_news_conserv(word_id,news_id){
         }
     });
 }
+
 function dislike_news_neutral(word_id,news_id){
     $.ajax({
         url:'/keyword/'+word_id+'/dislikes/'+news_id+'/',

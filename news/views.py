@@ -3,18 +3,18 @@ from django.shortcuts import render
 from serializers import NewsSerializer, UserSerializer, WordsSerializer, CompanySerializer
 from django.contrib.auth.models import User
 from rest_framework import permissions, renderers, viewsets
-from rest_framework.decorators import api_view, detail_route
-from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from models import Company, News, getTodayNews
+from models import Company, News, getTodayNews, NewsDislikes, NewsLikes
 from word.models import Words, getTodayWords
+from project.settings import RECOMMEND_SIZE
+from mypage.views import get_recommended_news
 from django import forms
 import wordgram
 import getNews
-import json
+
 from forms import LoginForm
 
 
@@ -42,16 +42,14 @@ class CompanyViewSet(viewsets.ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
 
-
+@login_required
 def index(request):
-    hot_keywords = getTodayWords().order_by('-freq')[0:3]
-    latest_news = getTodayNews().order_by('-id')[0:5]
-    content = {
-        'keywords': hot_keywords,
-        'latest_n': latest_news
-    }
+    rec_news = get_recommended_news(request.user)
 
-    return render(request, 'index.html', content)
+    import random
+    random.shuffle(rec_news)
+
+    return render(request, 'index.html', {'news':rec_news})
 
 
 def login(request):

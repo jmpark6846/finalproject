@@ -50,15 +50,15 @@ def words_detail(request, id):
 
         for c in conserv_com:
             conserv_news = conserv_news | word.news.filter(company=c)
-        sorted(conserv_news, key=lambda x: x.likes)
+        conserv_news = sorted(conserv_news, key=lambda x: x.likes, reverse=True)
 
         for c in prog_com:
             prog_news = prog_news | word.news.filter(company=c)
-        sorted(prog_news, key=lambda x: x.likes)
+        prog_news = sorted(prog_news, key=lambda x: x.likes, reverse=True)
 
         for c in neutral_com:
             neutral_news = neutral_news | word.news.filter(company=c)
-        sorted(neutral_news, key=lambda x: x.likes)
+        neutral_news = sorted(neutral_news, key=lambda x: x.likes, reverse=True)
 
         context = {
             'word':word,
@@ -102,6 +102,7 @@ def get_prog_word(request):
     list.sort(key=lambda x: x.freq, reverse=True)
     data = serializers.serialize("json", list[0:LIST_SIZE])
     return HttpResponse(data, content_type="application/json")
+
 
 def get_words(request):
     import json
@@ -209,30 +210,12 @@ def get_chart_series(request, value):
     data = json.dumps({'data_list':data_list, 'words_date':words_date},default=date_handler)
     return HttpResponse(data, content_type="application/json")
 
-@login_required
-def like_news(request, word_id, news_id):
 
-    news = News.objects.get(id=news_id)
-    try:
-        dislikes = NewsDislikes.objects.get(news=news)
-        dislikes.delete()
-
-    except NewsDislikes.DoesNotExist:
-        pass
-
-    try:
-        like=NewsLikes.objects.get(news=news)
-        like.delete()
-
-    except:
-        NewsLikes.objects.create(
-            news=news,
-            user=request.user
-        )
-
-
+def order_news_by_like(word_id, news_id):
     template = ""
+    news = News.objects.get(id=news_id)
     word = Words.objects.get(id=word_id)
+
     conserv_news = News.objects.none()
     prog_news = News.objects.none()
     neutral_news = News.objects.none()
@@ -258,7 +241,56 @@ def like_news(request, word_id, news_id):
             neutral_news = neutral_news | word.news.filter(company=c)
         neutral_news = sorted(neutral_news, key=lambda x: x.likes, reverse=True)
 
-    return render(request, template, {'word':word, 'prog_news':prog_news, 'conserv_news':conserv_news, 'neutral_news':neutral_news})
+    context ={
+        'template':template,
+        'news':{'word':word, 'prog_news':prog_news, 'conserv_news':conserv_news, 'neutral_news':neutral_news}
+    }
+    return context
+
+@login_required
+def like_news_in_words_detail(request, word_id, news_id):
+
+    news = News.objects.get(id=news_id)
+    try:
+        dislikes = NewsDislikes.objects.get(news=news)
+        dislikes.delete()
+
+    except NewsDislikes.DoesNotExist:
+        pass
+
+    try:
+        like=NewsLikes.objects.get(news=news)
+        like.delete()
+
+    except:
+        NewsLikes.objects.create(
+            news=news,
+            user=request.user
+        )
+    context = order_news_by_like(word_id,news_id)
+    return render(request, context['template'], context['news'])
+
+
+@login_required
+def like_news(request, news_id):
+    news = News.objects.get(id=news_id)
+    try:
+        dislikes = NewsDislikes.objects.get(news=news)
+        dislikes.delete()
+
+    except NewsDislikes.DoesNotExist:
+        pass
+
+    try:
+        like=NewsLikes.objects.get(news=news)
+        like.delete()
+
+    except:
+        NewsLikes.objects.create(
+            news=news,
+            user=request.user
+        )
+    return HttpResponse('like_news')
 
 
 @login_required
@@ -281,31 +313,5 @@ def dislike_news(request, word_id, news_id):
             user=request.user
         )
 
-    template = ""
-    word = Words.objects.get(id=word_id)
-    conserv_news = News.objects.none()
-    prog_news = News.objects.none()
-    neutral_news = News.objects.none()
-
-    if news.company.tend == u"진보":
-        template = 'words/news_list_prog.html'
-        prog_com = Company.objects.filter(tend='진보')
-        for c in prog_com:
-            prog_news = prog_news | word.news.filter(company=c)
-        prog_news = sorted(prog_news, key=lambda x: x.likes, reverse=True)
-
-    elif news.company.tend == u"보수":
-        template = 'words/news_list_conserv.html'
-        conserv_com = Company.objects.filter(tend='보수')
-        for c in conserv_com:
-            conserv_news = conserv_news | word.news.filter(company=c)
-        conserv_news = sorted(conserv_news, key=lambda x: x.likes, reverse=True)
-
-    elif news.company.tend == u"중립":
-        template = 'words/news_list_neutral.html'
-        neutral_com = Company.objects.filter(tend='중립')
-        for c in neutral_com:
-            neutral_news = neutral_news | word.news.filter(company=c)
-        neutral_news = sorted(neutral_news, key=lambda x: x.likes, reverse=True)
-
-    return render(request, template, {'word':word, 'prog_news':prog_news, 'conserv_news':conserv_news, 'neutral_news':neutral_news})
+    context = order_news_by_like(word_id,news_id)
+    return render(request, context['template'], context['news'])

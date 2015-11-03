@@ -13,9 +13,8 @@ def users_mypage(request):
     return render(request, 'mypage/mypage_liked.html', {'likes':likes})
 
 
-@login_required
-def recommended_news(request):
-    likes = NewsLikes.objects.filter(user=request.user)
+def get_recommended_news(user):
+    likes = NewsLikes.objects.filter(user=user)
 
     prog_n = 0.0
     conserv_n = 0.0
@@ -50,14 +49,16 @@ def recommended_news(request):
     prog_news = sorted(prog_news, key=lambda x: x.likes, reverse=True)
 
     recom_news = conserv_news[:conserv_r] + prog_news[:prog_r]
+    return recom_news
 
 
-    import pdb
-    pdb.set_trace()
+@login_required
+def recommend_news(request):
+    rec_news = get_recommended_news(request.user)
 
     import random
-    random.shuffle(recom_news)
-    return render(request, 'mypage/mypage_recommended.html', {'news':recom_news})
+    random.shuffle(rec_news)
+    return render(request, 'mypage/mypage_recommended.html', {'news':rec_news})
 
 
 def get_liked_ratio_data(request):

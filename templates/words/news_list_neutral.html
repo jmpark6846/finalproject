@@ -1,10 +1,10 @@
-<div class="tend hn">중립</div>
+<div class="tend">중립</div>
 {% for n in neutral_news %}
 <div class="word-news neutral-news">
     <div class="news-title"><a href="{{n.link}}">{{n.title|truncatechars:60}}</a></div>
     <div class="word-info">
         <span class="news-company">{{n.company}}</span><span>#{{n.id}}</span>
-        <span class="news-btn"><button onclick="dislike_news_neutral({{word.id}},{{n.id}})" class="btn btn-default">{{n.dislikes}} <i class="fa fa-thumbs-down"></i></button></span>
+        <span class="news-btn"><button onclick="dislike_news_neutral({{n.id}})" class="btn btn-default">{{n.dislikes}} <i class="fa fa-thumbs-down"></i></button></span>
         <span class="news-btn"><button onclick="like_news_neutral({{word.id}},{{n.id}})" class="btn btn-default">{{n.likes}} <i class="fa fa-thumbs-up"></i></button></span>
     </div>
 </div>
