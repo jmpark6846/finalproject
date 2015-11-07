@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container-fluid">
+<div class="container body-main ">
     <div class="grid-layout list-section row">
+        <div class="well" style=""> {{date|date:"Y년 M d일"}} 오늘의 키워드입니다.</div>
         <div class="grid-stack grid-board ng">
 
         </div>
@@ -12,33 +13,13 @@
                 <div>진보</div>
             </div>
             <div class="cloud-selector">
-                <i class="fa fa-user fa-3 neutral-select active"></i>
-                <div>중립</div>
-            </div>
-            <div class="cloud-selector">
                 <i class="fa fa-user fa-3 conserv-select active"></i>
                 <div>보수</div>
             </div>
-            <!--<SPAN>{{date|date:"Y년 M d일"}}</SPAN>-->
+
         </div>
 
     </div>
-    <!--<div class="recent-word-list list-section row gray-overlay">-->
-        <!--{% for list in recent_words_lists reversed %}-->
-            <!--<div class="word-list col-md-4">-->
-                <!--<div class="">-->
-                    <!--<div class="list-group">-->
-                        <!--<div class="list-group-item active"><center>{{list.0.date|date:"Y년 M d일"}}</center></div>-->
-                    <!--{% for w in list %}-->
-                        <!--<a href="/keyword/{{w.id}}/" class="list-group-item">{{w.rank}}. {{w.value}}-->
-                            <!--<span class="badge">{{w.freq}}</span>-->
-                        <!--</a>-->
-                    <!--{% endfor %}-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--{% endfor %}-->
-    <!--</div>-->
 </div>
     <script>word_list()</script>
 {% endblock %}

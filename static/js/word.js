@@ -196,7 +196,6 @@ function chart_setup(json_data){
         labels: json_data['words_date'],
         series: json_data['data_list']
     };
-//    console.log(data);
     var options = {
 
         showPoint: true,
@@ -212,7 +211,6 @@ function chart_setup(json_data){
             }
         },
         divisor: 5,
-        ticks: [1, 10, 20, 30],
         seriesBarDistance: 12,
         plugins: [
             Chartist.plugins.tooltip()
@@ -225,60 +223,23 @@ function chart_setup(json_data){
 
 /* ============= Likes ============ */
 
-function like_news_prog(word_id,news_id){
+function like_news_in_word_details(news_id){
+    var word_id = $('.body').attr('data-word-id');
     $.ajax({
         url:'/keyword/'+word_id+'/likes/'+news_id+'/',
         method:'POST',
         success:function(response){
-            $('.prog_news_list').html(response);
+            $('#news-list-in-word-details').html(response);
         }
     });
 }
-function like_news_conserv(word_id,news_id){
-    $.ajax({
-        url:'/keyword/'+word_id+'/likes/'+news_id+'/',
-        method:'POST',
-        success:function(response){
-            $('.conserv_news_list').html(response);
-        }
-    });
-}
-function like_news_neutral(word_id,news_id){
-    $.ajax({
-        url:'/keyword/'+word_id+'/likes/'+news_id+'/',
-        method:'POST',
-        success:function(response){
-            $('.neutral_news_list').html(response);
-        }
-    });
-}
-
-function dislike_news_prog(word_id,news_id){
+function dislike_news_in_word_details(news_id){
+    var word_id = $('.body').attr('data-word-id');
     $.ajax({
         url:'/keyword/'+word_id+'/dislikes/'+news_id+'/',
         method:'POST',
         success:function(response){
-            $('.prog_news_list').html(response);
-        }
-    });
-}
-
-function dislike_news_conserv(word_id,news_id){
-    $.ajax({
-        url:'/keyword/'+word_id+'/dislikes/'+news_id+'/',
-        method:'POST',
-        success:function(response){
-            $('.conserv_news_list').html(response);
-        }
-    });
-}
-
-function dislike_news_neutral(word_id,news_id){
-    $.ajax({
-        url:'/keyword/'+word_id+'/dislikes/'+news_id+'/',
-        method:'POST',
-        success:function(response){
-            $('.neutral_news_list').html(response);
+            $('#news-list-in-word-details').html(response);
         }
     });
 }

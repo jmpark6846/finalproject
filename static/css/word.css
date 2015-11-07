@@ -1,6 +1,5 @@
 /* ========= grid layout =========*/
 .grid-layout{
-    background-color:#F3F3F3;
 }
 .main-pattern-bg{
     background-color: #3E4651;
@@ -89,6 +88,7 @@
     font-family: 'Hanna';
     cursor:pointer;
 }
+
 .cloud-selector i{
     cursor:pointer;
     transition: color 150ms ease-in;
@@ -107,7 +107,7 @@
 }
 .cloud-select-panel{
     text-align:center;
-    margin-top: 15px;
+    margin-top: 50px;
 }
 .grid-stack-item{
     color:black;
@@ -138,8 +138,8 @@
     max-width:1000px!important;
 }
 div.word-title{
-    margin: 20px 10px;
-    color: black;
+    margin: 20px 10px 70px;
+    color: white;
 }
 .word-title h1{
     font-size: 50px;
@@ -167,6 +167,7 @@ div.word-title{
 }
 
 .news-title{
+    height: 47px;
     font-size:14px;
 }
 .news-meta{
@@ -180,7 +181,7 @@ div.word-title{
 
 .word-news{
     background: white;
-    margin-bottom: 15px;
+    margin: 20px 0px;
 }
 
 .word-news:after{
@@ -210,7 +211,7 @@ div.word-title{
     cursor:pointer;
 }
 .prog-news a{
-    color: #9A7918;
+    color: #C19207;
 }
 .conserv-news a{
     color:hsl(0, 78%, 57%);
@@ -219,26 +220,19 @@ div.word-title{
     margin-bottom:20px;
 }
 /* ============= chart ============= */
-div.word-chart{
-    min-height:100px;
-    padding-left:3%;
-    padding-right:3%;
-
-    background:white;
-}
 div.word-chart h3{
+    font-size: 24px;
     text-align:center;
     margin-bottom:25px;
 }
 .word-chart .category{
     text-align:center;
 }
-.word-chart .recent-words{
-    margin-top:20px;
+ul{
+    list-style-type: none;
 }
-.word-chart .ct-chart{
-    margin:20px auto;
-
+.recent-words li{
+    font-size: 16px;
 }
 
 .chartist-tooltip{
@@ -323,7 +317,9 @@ div.word-chart h3{
 .alert-warning a{
     color:#8a6d3b;
 }
-
+.side-menu{
+    font-size:16px;
+}
 /* ============ recent word list =========== */
 .recent-word-list{
     padding-left: 20px;
@@ -350,3 +346,4 @@ div.word-chart h3{
 #disqus_thread{
     background-color:white;
 }
+

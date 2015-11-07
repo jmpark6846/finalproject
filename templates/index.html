@@ -4,7 +4,6 @@
 <div class="container index-container">
     <div id="main-news" class="owl-carousel">
         {% for n in news %}
-
         <div class="news-preview">
             <a href="#">
                 <h3>{{ n.title }}</h3>
@@ -13,8 +12,7 @@
 
             <p class="meta">{{n.date|date:"Y년 M d일"}} <span class="badge">{{n.company.tend}}</span><span class="badge">{{n.company}}</span></p>
             <div class="ctrl-panel">
-                <button onclick="like_news({{n.id}})" class="btn btn-default">{{n.likes}} <i class="fa fa-thumbs-up"></i></button>
-                <button onclick="dislike_news({{n.id}})" class="btn btn-default">{{n.dislikes}} <i class="fa fa-thumbs-down"></i></button>
+                <span onclick="like_news({{n.id}})"><i class="fa fa-thumbs-up {% if user in n.likes.all %}text-primary{% endif %}"></i></span>
             </div>
         </div>
         {% endfor %}

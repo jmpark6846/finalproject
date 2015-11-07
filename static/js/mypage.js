@@ -1,7 +1,7 @@
 
 function liked_news_chart(){
     $.ajax({
-        url: "/mypage/get_liked_ratio_data/",
+        url: "/mypage/get_like_ratio/",
         method:'GET',
         success:function(response_data){
             make_liked_news_chart(response_data);
@@ -9,10 +9,10 @@ function liked_news_chart(){
     });
 }
 
-function make_liked_news_chart(liked_ratio){
+function make_liked_news_chart(liked_data){
     var data = {
         labels: ['보수', '진보'],
-        series: liked_ratio
+        series: liked_data['data_list']
     };
     var sum = function(a, b) { return a + b };
     var percentage = function(idx, data){
@@ -22,7 +22,7 @@ function make_liked_news_chart(liked_ratio){
 
         height: 350,
         labelInterpolationFnc: function(value,idx) {
-            return value+" "+data.series[idx]+"개 ("+percentage(idx, data)+")";
+            return value+" "+liked_data['count'][idx]+"개 ("+percentage(idx, data)+")";
         }
     };
 

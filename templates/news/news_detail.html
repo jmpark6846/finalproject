@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+    <div class="body">
+        <!-- ========== right panel =========== -->
+        <div class="news-detail-title">
+            <h3>{{news.title}}</h3>
+            <p class="meta">
+                {{news.date|date:"Y년 M d일"}} <span class="badge">{{news.company.tend}}</span><span class="badge">{{news.company}}</span>
+                <div class="like-btns pull-right">
+                    <span><a href="{% url 'news:like_news_in_news_detail' news.id %}">{{news.likes.all.count}} <i class="fa fa-thumbs-up {% if user in news.likes.all %}text-primary{% endif %}"></i></a></span>
+                    <span><a href="{% url 'news:dislike_news_in_news_detail' news.id %}">{{news.dislikes.all.count}} <i class="fa fa-thumbs-down {% if user in news.dislikes.all %}text-primary{% endif %}"></i></a></span>
+                </div>
+            </p>
+            <a href="{{news.link}}" class="btn btn-default">기사로 이동</a>
+        </div>
+    </div>
+    <div class="body2">
+        <div>{{news.html|safe|linebreaksbr}}</div>
+    </div>
+        <!-- ========== //right panel =========== -->
+    </div>
+</div>
+{% endblock %}

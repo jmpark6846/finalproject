@@ -3,5 +3,3 @@ from models  import *
 # Register your models here.
 admin.site.register(News)
 admin.site.register(Company)
-admin.site.register(NewsLikes)
-admin.site.register(NewsDislikes)

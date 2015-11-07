@@ -1,8 +1,7 @@
 <!-- ========== menu =========== -->
-<div class="col-md-3">
-    <h5>메뉴</h5>
+<div class="col-md-3" id="mypage_menu">
     <div class="list-group">
+        <a href="{% url 'mypage:recommend_news' %}" class="list-group-item">나를 위한 추천 뉴스</a>
         <a href="{% url 'mypage:users_mypage' %}" class="list-group-item">'좋아요'한 뉴스</a>
-        <a href="{% url 'mypage:recommended_news' %}" class="list-group-item">나를 위한 추천 뉴스</a>
     </div>
 </div>

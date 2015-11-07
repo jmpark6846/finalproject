@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="container">
-    <div class="row mypage-body">
+    <div class="row body-news-detail">
         {% include 'mypage/mypage_menu.html' %}
 
         <!-- ========== right panel =========== -->
@@ -11,29 +11,26 @@
 
                 </div>
             </div>
-            <!-- ======== recommended news list ========= -->
+            <!-- ======== liked news list ========= -->
             <div class="row">
-                {% for l in likes|slice:":10" %}
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <div class="caption">
-                                <a href="#">
-                                    <p>{{l.news.title|truncatechars:40}}</p>
-                                </a>
-                            </div>
-                            <div class="news-badges">
-                                <p class="">{{l.news.likes}} <i class="fa fa-thumbs-up liked"></i></p>
-                                <span class="badge">{{l.news.company.tend}}</span>
-                            </div>
-                        </div>
-                    </div>
+                {% for l in likes %}
+                <div class="news-preview liked">
+                    <a href="{% url 'news:news_detail' l.id %}">
+                        <h3>{{ l.title }}</h3>
+                    </a>
+
+                    <p class="meta">
+                        {{l.date|date:"Y년 M d일"}} <span class="badge">{{l.company.tend}}</span><span class="badge">{{l.company}}</span>
+                        <span class="news-btn"><a href="{% url 'mypage:like_news_in_liked_page' l.id %}">{{l.likes.all.count}} <i class="fa fa-thumbs-up {% if user in l.likes.all %}text-primary{% endif %}"></i></a></span>
+                    </p>
+
+                </div>
+                <hr>
                 {% endfor %}
             </div>
-            <!-- // ======== recommended news list ========= -->
+            <!-- // ======== recommended news list ==== ===== -->
         </div>
     </div>
 </div>
-<script>
-    liked_news_chart();
-</script>
+
 {% endblock %}

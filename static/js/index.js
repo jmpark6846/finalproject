@@ -12,6 +12,15 @@ $(document).ready(function() {
 
 });
 function like_news(news_id){
+    var like = $('i.fa-thumbs-up');
+e
+    if(like.hasClass('text-primary')){
+        like.removeClass('text-primary');
+
+    }else{
+        like.addClass('text-primary');
+    }
+
     $.ajax({
         url:'/keyword/likes/'+news_id+'/',
         method:'POST',

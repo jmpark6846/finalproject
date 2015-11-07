@@ -89,11 +89,13 @@ def crawlNews_seoul(user):
 				else:
 					title = title_div.find('h3').get_text()
 
-				content = soup.find('div',attrs={"class", "atic_txt1"})
-				if content is None:
-					content = soup.find('div', {"id": "CmAdContent"}).get_text()
+				html = soup.find('div',attrs={"class", "atic_txt1"})
+				if html is None:
+					html = soup.find('div', {"id": "CmAdContent"})
 				else:
-					content = content.get_text()
+					html = html
+				content = html.get_text()
+
 			except AttributeError:
 				print company.name+' AttributeError : ' + link
 
@@ -103,6 +105,7 @@ def crawlNews_seoul(user):
 				News.objects.create(
 					title=title,
 					content=content,
+					html= html,
 					link=link,
 					type=NEWS_TYPE[i],
 					user=user,
@@ -140,10 +143,11 @@ def crawlNews_donga(user):
 				title_div = soup.find('div',attrs={"class","article_title02"})
 				title = title_div.find('h1').get_text()
 
-				content = soup.find('div',attrs={"class","article_txt"}).get_text()
+				html = soup.find('div',attrs={"class","article_txt"})
+				content = html.get_text()
 				script = content.find('function')
 				content = content[:script]
-				##<script> function ...  지우기
+
 			except AttributeError:
 				print company.name+' AttributeError : ' + link
 
@@ -153,6 +157,7 @@ def crawlNews_donga(user):
 				News.objects.create(
 					title=title,
 					content=content,
+					html=html,
 					link=link,
 					type=NEWS_TYPE[i],
 					user=user,
@@ -188,7 +193,8 @@ def crawlNews_km(user):
 				soup = BeautifulSoup(htmltext, 'html.parser')
 				title_div = soup.find('div',attrs={"class","nwsti"})
 				title = title_div.find('h2').get_text()
-				content = soup.find('div',attrs={"class","tx"}).get_text()
+				html = soup.find('div',attrs={"class","tx"})
+				content = html.get_text()
 			except AttributeError:
 				print company.name+' AttributeError : ' + link
 
@@ -198,6 +204,7 @@ def crawlNews_km(user):
 				News.objects.create(
 					title=title,
 					content=content,
+					html=html,
 					link=link,
 					type=NEWS_TYPE[i],
 					user=user,
@@ -229,8 +236,8 @@ def crawlNews_hani(user):
 				soup = BeautifulSoup(htmltext, from_encoding="utf-8")
 				title_div = soup.find('div',attrs={"class","article-head"})
 				title = title_div.find('span',attrs={"class","title"}).get_text()
-				content = soup.find('div',attrs={"class","text"}).get_text()
-				content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+				html = soup.find('div',attrs={"class","text"})
+				content = html.get_text()
 			except AttributeError:
 				print company.name+' AttributeError : ' + link
 
@@ -240,6 +247,7 @@ def crawlNews_hani(user):
 				News.objects.create(
 					title=title,
 					content=content,
+					html=html,
 					link=link,
 					type=NEWS_TYPE[i],
 					user=user,
@@ -270,8 +278,8 @@ def crawlNews_pressian(user):
 				soup = BeautifulSoup(htmltext, from_encoding="utf-8")
 				title_div = soup.find('div',attrs={"class","hbox"})
 				title = title_div.find('div',attrs={"class","hboxtitle"}).get_text()
-				content = soup.find('div',attrs={"class","smartOutput"}).get_text()
-				content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+				html = soup.find('div',attrs={"class","smartOutput"})
+				content = html.get_text()
 			except AttributeError:
 				print company.name+' AttributeError : ' + link
 
@@ -281,6 +289,7 @@ def crawlNews_pressian(user):
 				News.objects.create(
 					title=title,
 					content=content,
+					html=html,
 					link=link,
 					type=NEWS_TYPE[i],
 					user=user,
@@ -314,8 +323,8 @@ def crawlNews_ytn(user):
 			try:
 				soup = BeautifulSoup(htmltext, from_encoding="utf-8")
 				title = soup.find('div', attrs={"class","article_tit"}).get_text()
-				content = soup.find('div',attrs={"class","article_paragraph"}).get_text()
-				content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+				html = soup.find('div',attrs={"class","article_paragraph"})
+				content = html.get_text()
 			except AttributeError:
 				print company.name+' AttributeError : ' + link
 
@@ -325,6 +334,7 @@ def crawlNews_ytn(user):
 				News.objects.create(
 					title=title,
 					content=content,
+					html=html,
 					link=link,
 					type=NEWS_TYPE[i],
 					user=user,
@@ -357,7 +367,8 @@ def crawlNews_joongang(user):
 			soup = BeautifulSoup(htmltext, from_encoding="utf-8")
 			try:
 				title = soup.find('h1',attrs={"class","headline"}).get_text()
-				content = soup.find('div', attrs={"class","article_body"}).get_text()
+				html = soup.find('div', attrs={"class","article_body"})
+				content=html.get_text()
 			except AttributeError:
 				print company.name+' AttributeError : ' + link
 				continue
@@ -368,6 +379,7 @@ def crawlNews_joongang(user):
 				News.objects.create(
 					title=title,
 					content=content,
+					html=html,
 					link=link,
 					type=NEWS_TYPE[i],
 					user=user,
@@ -408,8 +420,8 @@ def crawlNews_ohmynews(user):
 						continue
 
 				title = title.get_text()
-				content = soup.find('div',attrs={"class","at_contents"}).get_text()
-				content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+				html = soup.find('div',attrs={"class","at_contents"})
+				content = html.get_text()
 			except AttributeError:
 				print company.name+' AttributeError : ' + link
 				continue
@@ -420,6 +432,7 @@ def crawlNews_ohmynews(user):
 				News.objects.create(
 					title=title,
 					content=content,
+					html=html,
 					link=link,
 					type=NEWS_TYPE[i],
 					user=user,
@@ -452,8 +465,12 @@ def crawlNews_chosun(user):
 			try:
 				title_div = soup.find('div',attrs={"class","news_title_text"})
 				title = title_div.find('h1').get_text()
-				content = soup.find('div',attrs={"class","par"}).get_text()
-				content = wordgram.remove_puc_marks(content.encode('utf8')).decode('utf8')
+				contents = soup.findAll('div', attrs={"class", "par"})
+				html=""
+				content=""
+				for item in contents:
+					html+=str(item)
+					content += item.get_text()
 			except AttributeError:
 				print company.name+' AttributeError : ' + link
 				continue
@@ -464,9 +481,13 @@ def crawlNews_chosun(user):
 				News.objects.create(
 					title=title,
 					content=content,
+					html=html,
 					link=link,
 					type=NEWS_TYPE[i],
 					user=user,
 					date=datetime.now().strftime('%Y-%m-%d'),
 					company=company,
 				)
+
+
+

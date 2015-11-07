@@ -7,15 +7,28 @@ from rest_framework.reverse import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from models import Company, News, getTodayNews, NewsDislikes, NewsLikes
+from models import Company, News, getTodayNews
 from word.models import Words, getTodayWords
-from project.settings import RECOMMEND_SIZE
-from mypage.views import get_recommended_news
 from django import forms
 import wordgram
 import getNews
+from forms import LoginForm, RegisterForm
 
-from forms import LoginForm
+from bs4 import BeautifulSoup
+import urllib2
+
+def example(request):
+    link="http://news.chosun.com/site/data/html_dir/2015/11/07/2015110700329.html"
+    htmltext = urllib2.urlopen(link).read()
+    soup = BeautifulSoup(htmltext, from_encoding="utf-8")
+
+    content = soup.findAll('div', attrs={"class", "par"})
+    string=""
+    for item in content:
+        string+=str(item)
+
+    import pdb
+    pdb.set_trace()
 
 
 class NewsViewSet(viewsets.ModelViewSet):
@@ -44,12 +57,8 @@ class CompanyViewSet(viewsets.ModelViewSet):
 
 @login_required
 def index(request):
-    rec_news = get_recommended_news(request.user)
 
-    import random
-    random.shuffle(rec_news)
-
-    return render(request, 'index.html', {'news':rec_news})
+    return HttpResponseRedirect('/keyword/')
 
 
 def login(request):
@@ -77,6 +86,24 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect('/')
+
+
+def register(request):
+    if request.method == 'GET':
+        form = RegisterForm()
+        return render(request,'register.html', {'form':form})
+    else:
+        form = RegisterForm(request.POST)
+
+        if form.is_valid():
+            user = User.objects.create_user(
+                username = form.cleaned_data['username'] ,
+                email = form.cleaned_data['email'] ,
+                password = form.cleaned_data['password']
+            )
+            return HttpResponseRedirect(reverse('index'))
+        else:
+            return render(request,'register.html',{'form':form})
 
 
 @login_required
@@ -118,24 +145,30 @@ def make_companies(request):
 
 @login_required
 def crawl_news(request):
+
+    # 보수
     getNews.crawlNews_chosun(request.user)
     print "end chosun"
     getNews.crawlNews_joongang(request.user)
     print "end joongang"
+    getNews.crawlNews_donga(request.user)
+    print "end donga"
+
+    # 진보
     getNews.crawlNews_ohmynews(request.user)
     print "end ohmynews"
     getNews.crawlNews_hani(request.user)
     print "end hani"
     getNews.crawlNews_pressian(request.user)
     print "end pressian"
-    getNews.crawlNews_donga(request.user)
-    print "end donga"
     getNews.crawlNews_km(request.user)
     print "end km"
-    getNews.crawlNews_seoul(request.user)
-    print "end seoul"
-    getNews.crawlNews_hankook(request.user)
-    print "end hankook"
+
+    # 중립
+    # getNews.crawlNews_seoul(request.user)
+    # print "end seoul"
+    # getNews.crawlNews_hankook(request.user)
+    # print "end hankook"
 
     return HttpResponseRedirect(reverse('keyword:words_list'))
 
@@ -162,4 +195,41 @@ def analyze_news(request):
         word.save()
 
     return HttpResponseRedirect(reverse('keyword:words_list'))
+
+
+def news_detail(request, id):
+    news = News.objects.get(id=id)
+    return render(request,'news/news_detail.html', {'news':news})
+
+
+@login_required
+def like_news_in_news_detail(request, id):
+    news = News.objects.get(id=id)
+    user = request.user
+    if user in news.likes.all():
+        news.likes.remove(user)
+
+    elif user in news.dislikes.all():
+        news.dislikes.remove(user)
+        news.likes.add(user)
+    else:
+        news.likes.add(user)
+
+    return HttpResponseRedirect(reverse('news:news_detail', kwargs={'id': id}))
+
+
+@login_required
+def dislike_news_in_news_detail(request, id):
+    news = News.objects.get(id=id)
+    user = request.user
+
+    if user in news.likes.all():
+        news.likes.remove(user)
+        news.dislikes.add(user)
+    elif user in news.dislikes.all():
+        news.dislikes.remove(user)
+    else:
+        news.dislikes.add(user)
+
+    return HttpResponseRedirect(reverse('news:news_detail', kwargs={'id': id}))
 

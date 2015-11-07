@@ -1,31 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<form method="post" action="/register/" class="register-form form-horizontal" style="width: 410px;margin: auto;">
-	{% csrf_token %}
-	<section class="page-header form-group" style="margin-top: 10px;">
-		<h2>회원가입<small>Register</small></h2>
-	</section>
-	<p class="form-group">
-		<label for="id_email" class="control-label">이메일</label> 
-		<input id="id_email" maxlength="128" name="email" type="text" class="form-control">
-	</p>
-	<p class="form-group">
-		<label for="id_password" class="control-label">비밀번호</label> 
-		<input id="id_password" name="password" type="password" class="form-control">
-	</p>
-	<p class="form-group">
-		<label for="id_password2" class="control-label">비밀번호 재입력</label> 
-		<input id="id_password2" name="password2" type="password" class="form-control">
-	</p>
-	<p class="form-group">
-		<label for="id_username" class="control-label">이름</label> 
-		<input id="id_username" maxlength="64" name="username" type="text" class="form-control">
-	</p>
-	<p class="form-group" style="float: right;">
-		<input type="submit" value="가입" class="btn btn-info">
-	</p>
-</form>
-
+<div class="container body-news-detail">
+	<form method="post" action="/register/" class="register-form form-horizontal" style="width: 410px;margin: auto;">
+		{% csrf_token %}
+		<p class="form-group">
+			<label for="id_email" class="control-label">이메일</label>
+			<input id="id_email" maxlength="128" name="email" type="text" class="form-control">
+		</p>
+		<p class="form-group">
+			<label for="id_password" class="control-label">비밀번호</label>
+			<input id="id_password" name="password" type="password" class="form-control">
+		</p>
+		<p class="form-group">
+			<label for="id_password2" class="control-label">비밀번호 재입력</label>
+			<input id="id_password2" name="password2" type="password" class="form-control">
+		</p>
+		<p class="form-group">
+			<label for="id_username" class="control-label">이름</label>
+			<input id="id_username" maxlength="64" name="username" type="text" class="form-control">
+		</p>
+		<p class="form-group" style="float: right;">
+			<input type="submit" value="가입" class="btn btn-info">
+		</p>
+	</form>
+</div>
 {% endblock %}

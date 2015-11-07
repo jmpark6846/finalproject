@@ -8,6 +8,7 @@ from tfidf import tf_idf_map
 
 # 문장부호제거
 def remove_puc_marks(contents):
+
 	pmarks=['】','【','▲','ⓒ','·','\'','\"','?', '/', '(', ')','[',']', ',', '.', ':', '{', '}', ';', '!', '@', '#', '$', '%', '^', '&', '-', '_', '=', '<', '>', '*','\n', '\r']
 	pmarks_special=[]
 	for mark in pmarks:
@@ -51,8 +52,7 @@ def hannanum_analyze_22():
 	news = getTodayNews()
 	
 	for n in news :
-		content = n.content
-		content = remove_puc_marks(content) # 문장 부호 제거
+		content = remove_puc_marks(n.content) # 문장 부호 제거
 		words_dic = h.pos(content,22)			# 형태소 제거
 		dictionary={}
 		for t in words_dic:
@@ -82,7 +82,7 @@ def create_words(analyzed_dics):
 	}
 	"""
 	for news,data in analyzed_dics.items():
-		sorted_data = Counter(data).most_common(30)
+		sorted_data = Counter(data).most_common(50)
 
 		for item in sorted_data:
 			keyword=item[0]

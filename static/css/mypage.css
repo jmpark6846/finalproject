@@ -1,17 +1,29 @@
-.mypage-body{
-    background-color: white;
+.body{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #64DDBB;
     margin-top: 20px;
-    padding: 30px 10px 10px;
-    min-height:700px;
+    padding: 30px 45px 30px;
+    /* min-height: 700px; */
 }
-.mypage-body .ct-label{
+.body-main{
+    background-color:#f3f3f3;
+}
+.body .ct-label{
     text-align:center;
     color:white;
     font-weight: 700;
     fill: white;
     font-size:20px;
 }
-
+.body2{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: white;
+    margin-bottom: 20px;
+    padding: 40px 45px 40px;
+    min-height: 700px;
+}
 .ct-series-b .ct-slice-pie {
     fill: #FFC300;
 }
@@ -31,4 +43,60 @@
 }
 i.liked{
     color:blue;
+}
+
+.news-preview{
+    padding:30px 20px;
+}
+.news-preview:hover{
+    background-color:rgba(88, 213, 177, 0.3);
+}
+.news-preview h3{
+    font-size:32px;
+    font-weight:500;
+    margin-top:0px;
+    margin-bottom: 10px;
+    color:black;
+    line-height: 1.5;
+}
+.news-preview h5{
+    font-size:20px;
+    font-weight: 300;
+    margin-bottom: 10px;
+    color:black;
+    line-height: 1.5;
+}
+.news-preview .meta{
+    color: gray;
+    font-size: 18px;
+    font-style:italic;
+    line-height: 1.5;
+}
+.ctrl-panel{
+        text-align: center;
+}
+
+
+/* ========== liked =========== */
+.liked{
+    padding:10px;
+}
+.liked h3{
+    margin:10px 0px;
+    font-size:20px;
+}
+#mypage_menu h5{
+    font-size:20px;
+    font-weight:300;
+}
+
+#mypage-content h5{
+    font-size:20px;
+    font-weight:300;
+}
+
+.news-detail-title h3{
+    font-weight:400;
+    font-size:36px;
+    color:white;
 }

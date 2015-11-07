@@ -24,42 +24,24 @@ class Company(models.Model):
         return self.news.filter(date=now)
 
 
-
 class News(models.Model):
     user = models.ForeignKey('auth.User', related_name='news')
     date = models.DateTimeField()
     title = models.CharField(max_length=256, blank=True, default="")
+    html = models.TextField()
     content = models.TextField()
     link = models.CharField(max_length=256, blank=True, default="")
     type = models.CharField(choices=NEWS_TYPE, default="society", max_length=100)
     company = models.ForeignKey('Company', related_name='news')
 
-    def getLikesCount(self):
-        return NewsLikes.objects.filter(news=self).count()
-
-    def getDislikesCount(self):
-        return NewsDislikes.objects.filter(news=self).count()
-
-    likes    = property(getLikesCount)
-    dislikes = property(getDislikesCount)
+    likes    = models.ManyToManyField('auth.User', related_name = "liked_news")
+    dislikes = models.ManyToManyField('auth.User', related_name = "disliked_news")
 
     def __unicode__(self):
         return self.title
 
     class Meta:
         ordering = ('date',)
-
-
-class NewsLikes(models.Model):
-    news = models.ForeignKey(News)
-    user = models.ForeignKey('auth.User')
-    created_at = models.DateTimeField(auto_now_add=True)
-
-
-class NewsDislikes(models.Model):
-    news = models.ForeignKey(News)
-    user = models.ForeignKey('auth.User')
-    created_at = models.DateTimeField(auto_now_add=True)
 
 
 def getTodayNews():

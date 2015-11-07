@@ -1,62 +1,50 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="container word-detail">
-    <div class="row">
-        <div class="word-title">
-            <h1 >{{word.value}} </h1>
-        </div>
-        <ul class="nav nav-tabs ">
-          <li role="presentation" class="active"><a href="#news-tab" data-toggle="tab">뉴스</a></li>
-          <li role="presentation" ><a href="#chart-tab" data-toggle="tab">통계</a></li>
-          <li role="presentation" ><a href="#discuss-tab" data-toggle="tab">토론</a></li>
-        </ul>
-        <div class="word-date">
-            <!--{{word.date|date:"Y년 M d일"}}-->
-        </div>
+<div class="container body" data-word-id="{{word.id}}">
+    <div class="word-title">
+        <h1 >{{word.value}} </h1>
     </div>
-
+</div>
+<div class="container body2">
+    <ul class="nav nav-tabs ">
+        <li role="presentation" class="active" ><a href="#chart-tab" data-toggle="tab">통계</a></li>
+        <li role="presentation"><a href="#news-tab" data-toggle="tab">뉴스</a></li>
+        <li role="presentation" ><a href="#discuss-tab" data-toggle="tab">토론</a></li>
+    </ul>
 
     <div class="row">
         <div id="tab-content" class="col-md-9 tab-content">
-            <div class="tab-pane fade active in" id="news-tab">
-                <div class="row">
-                    <div class="col-md-6 prog_news_list">
-                        {% include 'words/news_list_prog.html' %}
+            <div class="tab-pane fade active in" id="chart-tab">
+                <div class="word-chart">
+                    <h3 >최근 등장 횟수</h3>
+
+                    <div class="ct-chart ct-major-eleventh"></div>
+                    <div class="category">
+                        <span class="badge badge-all">종합</span>
+                        <span class="badge badge-conserv">보수</span>
+                        <span class="badge badge-prog">진보</span>
                     </div>
-                    <div class="col-md-6 conserv_news_list">
-                        {% include 'words/news_list_conserv.html' %}
-                    </div>
+
                 </div>
             </div>
-            <div class="tab-pane fade" id="chart-tab">
-                <div class="word-chart">
-                    <h3 class="" >최근 등장 횟수</h3>
-                    <hr>
-                    <div class="row">
-                        <div class="ct-chart ct-major-eleventh"></div>
-                        <div class="category">
-                            <span class="badge badge-all">종합</span>
-                            <span class="badge badge-conserv">보수</span>
-                            <span class="badge badge-neutral">중립</span>
-                            <span class="badge badge-prog">진보</span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <ul class="recent-words">
-                            {% for rw in recent_words %}
-                                <li><a href="/keyword/{{rw.id}}">{{rw.freq}}번 등장 ({{rw.date|date:"Y년 M d일"}})</a></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
+            <div class="tab-pane fade" id="news-tab">
+                <div class="row" id="news-list-in-word-details">
+                    {% include 'words/news_list_in_word_details.html' %}
                 </div>
             </div>
             <div class="tab-pane fade" id="discuss-tab">
-                <div id="disqus_thread" class="section row"></div>
+                <div id="disqus_thread"></div>
             </div>
         </div>
-        <div class="col-md-3">
-                메타 인포메이션
+        <div class="side-menu col-md-3">
+            <div class="word-date">{{word.date|date:"Y년 M d일"}}</div>
+            <div>등장 이력</div>
+            <div class="recent-words">
+                {% for rw in recent_words %}
+                    <div><a href="/keyword/{{rw.id}}">{{rw.date|date:"Y년 M d일"}} ({{rw.freq}}번)</a></div>
+                {% endfor %}
             </div>
+        </div>
     </div>
 
 </div>

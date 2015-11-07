@@ -14,13 +14,18 @@ router.register(r'words', views.WordsViewSet)
 router.register(r'company', views.CompanyViewSet)
 
 urlpatterns = [
+    # setting
     url(r'^admin/', include(admin.site.urls)),
     url(r'^rest-api/', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
+    # sessions
     url(r'^$', views.index, name='index'),
     url(r'^login/', views.login, name='login'),
     url(r'^logout/$', views.logout, name='logout'),
+    url(r'^register/$', views.register, name='register'),
+
+    # apps
     url(r'^news/', include(news_urls, namespace='news')),
     url(r'^keyword/', include(word_urls, namespace='keyword')),
     url(r'^mypage/', include(users_urls, namespace='mypage')),
