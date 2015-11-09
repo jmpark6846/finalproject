@@ -4,13 +4,7 @@
     <list default="true" id="7ba69d35-270e-4898-af8e-3d2c28d9c46f" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mypage/views.py" afterPath="$PROJECT_DIR$/mypage/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/news/forms.py" afterPath="$PROJECT_DIR$/news/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/news/getNews.py" afterPath="$PROJECT_DIR$/news/getNews.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/news/views.py" afterPath="$PROJECT_DIR$/news/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/news/wordgram.py" afterPath="$PROJECT_DIR$/news/wordgram.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/css/word.css" afterPath="$PROJECT_DIR$/static/css/word.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/mypage/mypage_liked.html" afterPath="$PROJECT_DIR$/templates/mypage/mypage_liked.html" />
     </list>
     <ignored path="project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,16 +25,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="wordgram.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/news/wordgram.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="96" column="25" selection-start-line="96" selection-start-column="25" selection-end-line="96" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="word.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/static/css/word.css">
           <provider selected="true" editor-type-id="text-editor">
@@ -83,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="navbar.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="navbar.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/navbar.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48467153">
-              <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
+            <state vertical-scroll-proportion="-17.5625">
+              <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -99,6 +83,18 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="getNews.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/news/getNews.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6372981">
+              <caret line="233" column="22" selection-start-line="233" selection-start-column="22" selection-end-line="233" selection-end-column="22" />
+              <folding>
+                <element signature="e#24#53#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -191,7 +187,6 @@
         <option value="$PROJECT_DIR$/templates/news/news_detail.html" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/news/views.py" />
-        <option value="$PROJECT_DIR$/news/getNews.py" />
         <option value="$PROJECT_DIR$/news/wordgram.py" />
         <option value="$PROJECT_DIR$/static/css/word.css" />
         <option value="$PROJECT_DIR$/templates/mypage/mypage_liked.html" />
@@ -199,6 +194,7 @@
         <option value="$PROJECT_DIR$/news/forms.py" />
         <option value="$PROJECT_DIR$/mypage/views.py" />
         <option value="$PROJECT_DIR$/templates/navbar.html" />
+        <option value="$PROJECT_DIR$/news/getNews.py" />
       </list>
     </option>
   </component>
@@ -867,16 +863,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/news/getNews.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="30" selection-start-line="51" selection-start-column="30" selection-end-line="51" selection-end-column="30" />
-          <folding>
-            <element signature="e#24#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/news/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -970,9 +956,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/navbar.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48467153">
-          <caret line="20" column="47" selection-start-line="20" selection-start-column="47" selection-end-line="20" selection-end-column="47" />
+        <state vertical-scroll-proportion="-17.5625">
+          <caret line="30" column="29" selection-start-line="30" selection-start-column="29" selection-end-line="30" selection-end-column="29" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/news/getNews.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6372981">
+          <caret line="233" column="22" selection-start-line="233" selection-start-column="22" selection-end-line="233" selection-end-column="22" />
+          <folding>
+            <element signature="e#24#53#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

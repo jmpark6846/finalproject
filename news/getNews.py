@@ -230,8 +230,15 @@ def crawlNews_hani(user):
         for news in newsList:
             newsLink.append("http://www.hani.co.kr"+news.find('a')['href'])
 
+
+        import httplib
         for link in newsLink :
-            htmltext = urllib2.urlopen(link).read()
+            try:
+                htmltext = urllib2.urlopen(link).read()
+            except httplib.IncompleteRead, e:
+                htmltext = e.partial
+                print htmltext
+
             try:
                 soup = BeautifulSoup(htmltext, from_encoding="utf-8")
                 title_div = soup.find('div',attrs={"class","article-head"})
