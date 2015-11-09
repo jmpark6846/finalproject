@@ -33,8 +33,8 @@ def get_like_ratio(request):
         prog_r = 5
         conserv_r = 5
 
-    data_list=[prog_r,conserv_r]
-    count=[prog_n, conserv_n]
+    data_list=[conserv_r,prog_r]
+    count=[conserv_n, prog_n]
     import json
     data = json.dumps({'data_list':data_list, 'count':count})
     return HttpResponse(data, content_type="application/json")

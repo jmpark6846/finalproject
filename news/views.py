@@ -18,17 +18,41 @@ from bs4 import BeautifulSoup
 import urllib2
 
 def example(request):
-    link="http://news.chosun.com/site/data/html_dir/2015/11/07/2015110700329.html"
-    htmltext = urllib2.urlopen(link).read()
-    soup = BeautifulSoup(htmltext, from_encoding="utf-8")
+    NEWS_TYPE = {
+        'politics': 'politics',
+        'society': 'society',
+    }
+    company = Company.objects.get(name="연합뉴스")
+    for i in NEWS_TYPE.keys() :
+        url = "http://www.yonhapnews.co.kr/"+i+"/index.html"
 
-    content = soup.findAll('div', attrs={"class", "par"})
-    string=""
-    for item in content:
-        string+=str(item)
+        # html source
+        htmltext = urllib2.urlopen(url).read()
 
-    import pdb
-    pdb.set_trace()
+        soup = BeautifulSoup(htmltext, from_encoding="utf-8")
+
+        # 기사 읽기
+        newsList = soup.findAll('h2',attrs={"class","tit-news"})
+        newsLink = []
+        for news in newsList:
+            newsLink.append(news.find('a')['href'])
+
+        for link in newsLink :
+            htmltext = urllib2.urlopen(link).read()
+            try:
+                soup = BeautifulSoup(htmltext, 'html.parser')
+                title = soup.find('h1',attrs={"class","tit-article"}).get_text()
+                html = soup.find('div',attrs={"class","article"})
+                content = html.get_text()
+            except AttributeError:
+                print company.name+' AttributeError : ' + link
+
+            if len(content) <= 100:
+                continue
+            else:
+                print title
+                print content
+
 
 
 class NewsViewSet(viewsets.ModelViewSet):
@@ -145,7 +169,6 @@ def make_companies(request):
 
 @login_required
 def crawl_news(request):
-
     # 보수
     getNews.crawlNews_chosun(request.user)
     print "end chosun"
@@ -153,6 +176,8 @@ def crawl_news(request):
     print "end joongang"
     getNews.crawlNews_donga(request.user)
     print "end donga"
+    getNews.crawlNews_yonhap(request.user)
+    print "end yonhap"
 
     # 진보
     getNews.crawlNews_ohmynews(request.user)

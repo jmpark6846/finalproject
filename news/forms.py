@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
+from django.contrib.auth.models import User
 
 
 class LoginForm(forms.Form):
@@ -14,7 +15,7 @@ class RegisterForm(forms.Form):
     username = forms.CharField(label='User Name', max_length=64)
 
     def clean(self):
-        cleaned_data = super(JoinForm,self).clean()
+        cleaned_data = super(RegisterForm,self).clean()
         pw = cleaned_data.get('password')
         pw2 = cleaned_data.get('password2')
         email = cleaned_data.get('email')

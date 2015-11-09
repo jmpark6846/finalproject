@@ -92,10 +92,10 @@ def create_words(analyzed_dics):
 				dic[keyword].append(news)
 
 	for keyword, news_list in dic.items():
-		if len(news_list) <= 3 :
+		if len(news_list) <= 3:
 			continue
-		else:
-			word=Words.objects.create(
+		elif len(keyword) > 1:
+			word = Words.objects.create(
 				value=keyword,
 				freq=len(news_list),
 				date=datetime.now().strftime('%Y-%m-%d'),
